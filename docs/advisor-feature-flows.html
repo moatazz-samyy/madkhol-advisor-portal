@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madkhol Advisor Portal — Per-Feature Flow Charts</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; font-family: 'Tajawal', 'Rubik', ui-sans-serif, system-ui, -apple-system, sans-serif; background: #F5F5F0; color: #1a1a1a; }
+    .app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+    aside {
+      position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto;
+      background: #1F2937; color: #fff; padding: 20px 0;
+    }
+    aside h1 { font-size: 13px; margin: 0 18px 12px; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.08em; }
+    aside .brand { font-size: 14px; margin: 0 18px 18px; font-weight: 700; padding-bottom: 12px; border-bottom: 1px solid #374151; }
+    aside nav a {
+      display: block; padding: 8px 18px; color: #D1D5DB; text-decoration: none;
+      font-size: 13px; border-left: 3px solid transparent; transition: all 0.15s;
+    }
+    aside nav a:hover { background: #374151; color: #fff; border-left-color: #FFCB31; }
+    main { padding: 32px 40px 80px; }
+    section.flow { margin-bottom: 64px; padding-top: 16px; }
+    section.flow header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid #E5E7EB; }
+    section.flow h2 { margin: 0; font-size: 22px; color: #0A2E1F; }
+    section.flow p.subtitle { margin: 6px 0 0; color: #6B7280; font-size: 13px; max-width: 720px; }
+    .diagram { background: #fff; border: 1px solid #E5E7EB; border-radius: 12px; padding: 24px; overflow: auto; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .diagram svg { display: block; margin: 0 auto; }
+    .demo-note { margin-top: 16px; padding: 12px 16px; background: #FEF3C7; border-left: 4px solid #F59E0B; border-radius: 6px; font-size: 12px; color: #78350F; }
+    .demo-note b { color: #5B2E07; }
+    .legend { margin-top: 28px; padding: 20px 24px; background: #fff; border: 1px solid #E5E7EB; border-radius: 12px; display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+    .legend-item { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: #374151; }
+    .legend-swatch { width: 20px; height: 16px; border: 1.5px solid #1a1a1a; }
+    .legend-swatch.yellow { background: #FFCB31; }
+    .legend-swatch.coral  { background: #F26464; }
+    .legend-swatch.pink   { background: #FFD8D8; border-radius: 4px; }
+    .legend-swatch.blue   { background: #6FA8F5; }
+    .legend-swatch.tri    { background: #FFCB31; clip-path: polygon(50% 0, 100% 100%, 0 100%); border: none; }
+    h1.page-title { margin: 0 0 6px; font-size: 26px; color: #0A2E1F; }
+    p.page-sub { margin: 0 0 28px; color: #6B7280; font-size: 14px; max-width: 720px; }
+    @media print {
+      .app { grid-template-columns: 1fr; }
+      aside { display: none; }
+      section.flow { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+<aside>
+  <div class="brand">Madkhol Advisor Portal</div>
+  <h1>Feature Flows</h1>
+  <nav>
+    <a href="#login">1 · Authentication</a>
+    <a href="#dashboard">2 · Dashboard</a>
+    <a href="#clients">3 · Clients</a>
+    <a href="#search">4 · Asset Search</a>
+    <a href="#sectors">5 · Sector Heatmap</a>
+    <a href="#optimizer">6 · Optimizer</a>
+    <a href="#allocation">7 · Allocation Order</a>
+    <a href="#rebalance">8 · Rebalance</a>
+    <a href="#models">9 · Model Portfolios</a>
+    <a href="#madkhol-ai">10 · Madkhol AI</a>
+    <a href="#alpaca">11 · Alpaca Models</a>
+    <a href="#projections">12 · Projections</a>
+    <a href="#shariah">13 · Shariah</a>
+    <a href="#zakat">14 · Zakat</a>
+    <a href="#mirath">15 · Mirath</a>
+    <a href="#gosi">16 · GOSI</a>
+    <a href="#messages">17 · Messages</a>
+    <a href="#marketplace-advisor">18 · Marketplace (Advisor)</a>
+    <a href="#marketplace-consumer">19 · Marketplace (Consumer)</a>
+    <a href="#operational">20 · Operational</a>
+  </nav>
+</aside>
+
+<main>
+  <h1 class="page-title">Per-Feature Flow Charts</h1>
+  <p class="page-sub">One detailed sticky-note flow per feature. Yellow boxes are user-facing screens, coral boxes are backend / system actions, pink notes are annotations, triangles are decisions, blue is the entry point.</p>
+
+  <div class="legend">
+    <span class="legend-item"><span class="legend-swatch blue"></span> Start / entry</span>
+    <span class="legend-item"><span class="legend-swatch yellow"></span> User action / screen</span>
+    <span class="legend-item"><span class="legend-swatch coral"></span> System / backend action</span>
+    <span class="legend-item"><span class="legend-swatch pink"></span> Annotation</span>
+    <span class="legend-item"><span class="legend-swatch tri"></span> Decision / branch</span>
+  </div>
+
+  <div style="height: 36px;"></div>
+
+  <!-- ============================================================== -->
+  <!-- 1. AUTHENTICATION -->
+  <!-- ============================================================== -->
+  <section class="flow" id="login">
+    <header>
+      <h2>1 · Authentication</h2>
+      <p class="subtitle">No public sign-up — advisors are pre-onboarded by Madkhol Operations. The flow assumes an existing account.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 420" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs>
+          <marker id="ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker>
+        </defs>
+        <!-- 1 Start -->
+        <text x="120" y="40" font-size="11" font-weight="700">1. Advisor lands on /login</text>
+        <rect x="20" y="50" width="200" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Advisor opens portal URL. Madkhol-branded login screen renders.</div></foreignObject>
+        <line x1="220" y1="90" x2="265" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah1)"/>
+        <!-- 2 Enter creds -->
+        <text x="365" y="40" font-size="11" font-weight="700">2. Enter credentials</text>
+        <rect x="270" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="280" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Advisor enters email + password. AR/EN toggle visible top-right.</div></foreignObject>
+        <line x1="470" y1="90" x2="515" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah1)"/>
+        <!-- 3 Submit -->
+        <text x="620" y="40" font-size="11" font-weight="700">3. Submit form</text>
+        <rect x="520" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="530" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Click "Sign in". Form POSTs to NextAuth /api/auth/callback/credentials.</div></foreignObject>
+        <line x1="720" y1="90" x2="765" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah1)"/>
+        <!-- 4 System validates -->
+        <text x="870" y="40" font-size="11" font-weight="700">4. Backend: validate</text>
+        <rect x="770" y="50" width="200" height="80" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="780" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">NextAuth compares bcrypt(password) against Advisor.passwordHash.</div></foreignObject>
+        <line x1="970" y1="90" x2="1015" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah1)"/>
+        <!-- 5 Decision -->
+        <polygon points="1115,50 1180,170 1050,170" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <text x="1115" y="130" text-anchor="middle" font-size="11" font-weight="700">Valid?</text>
+        <!-- Yes path -->
+        <line x1="1180" y1="110" x2="1230" y2="110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah1)"/>
+        <text x="1185" y="100" font-size="10" fill="#16A34A" font-weight="700">YES</text>
+        <text x="1280" y="40" font-size="11" font-weight="700">6. Dashboard</text>
+        <rect x="1235" y="50" width="150" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1240" y="62" width="140" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">JWT issued. Redirect to /[locale]/dashboard.</div></foreignObject>
+        <!-- No path -->
+        <line x1="1115" y1="170" x2="1115" y2="240" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah1)"/>
+        <text x="1125" y="200" font-size="10" fill="#DC2626" font-weight="700">NO</text>
+        <text x="1190" y="265" font-size="11" font-weight="700">Error</text>
+        <rect x="1015" y="250" width="200" height="60" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1025" y="260" width="180" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Inline error: "Email or password is incorrect" — back to step 2.</div></foreignObject>
+        <!-- Annotation -->
+        <rect x="270" y="180" width="200" height="50" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="280" y="188" width="180" height="42"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:10px;color:#1a1a1a;text-align:center;font-style:italic;">Demo seed: advisor1@madkhol.com · demo123 (Saad) or advisor2@madkhol.com · demo123 (Sara)</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Sign in as Saad (advisor1) for a populated book; Sara (advisor2) for a fresher feel and to show empty-states.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 2. DASHBOARD -->
+  <!-- ============================================================== -->
+  <section class="flow" id="dashboard">
+    <header>
+      <h2>2 · Dashboard</h2>
+      <p class="subtitle">The advisor's daily home screen. Glanceable health of the entire book in one view, with paths into every other feature.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 480" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <!-- Start -->
+        <text x="120" y="40" font-size="11" font-weight="700">1. Land on Dashboard</text>
+        <rect x="20" y="50" width="200" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Greeting with advisor name + Hijri/Gregorian date.</div></foreignObject>
+        <line x1="220" y1="90" x2="265" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <!-- 2 Stat cards -->
+        <text x="370" y="40" font-size="11" font-weight="700">2. Read 4 stat cards</text>
+        <rect x="270" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="280" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Total AUM · # Clients · YTD return · # open Shariah alerts.</div></foreignObject>
+        <line x1="490" y1="90" x2="535" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <!-- 3 Banners -->
+        <text x="640" y="40" font-size="11" font-weight="700">3. Banners (conditional)</text>
+        <rect x="540" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="550" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Madkhol AI · Alpaca · Connect / sync prompts based on state.</div></foreignObject>
+        <line x1="760" y1="90" x2="805" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <!-- 4 Decision -->
+        <polygon points="900,50 985,170 815,170" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <text x="900" y="115" text-anchor="middle" font-size="11" font-weight="700">Where to go?</text>
+        <!-- Branch A: Alerts -->
+        <line x1="900" y1="170" x2="180" y2="240" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <text x="100" y="275" font-size="11" font-weight="700">A. Shariah alert</text>
+        <rect x="20" y="285" width="240" height="70" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="295" width="220" height="55"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Click alert → drills to Shariah Dashboard with that fund pre-selected.</div></foreignObject>
+        <!-- Branch B: Top client -->
+        <line x1="900" y1="170" x2="500" y2="240" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <text x="430" y="275" font-size="11" font-weight="700">B. Top client</text>
+        <rect x="320" y="285" width="240" height="70" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="330" y="295" width="220" height="55"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Click a top-AUM client card → Client Detail (5 tabs).</div></foreignObject>
+        <!-- Branch C: Activity -->
+        <line x1="900" y1="170" x2="820" y2="240" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <text x="750" y="275" font-size="11" font-weight="700">C. Activity feed</text>
+        <rect x="640" y="285" width="240" height="70" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="650" y="295" width="220" height="55"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Click recent allocation / sync / order → jumps to its detail.</div></foreignObject>
+        <!-- Branch D: Sidebar -->
+        <line x1="900" y1="170" x2="1100" y2="240" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <text x="1100" y="275" font-size="11" font-weight="700">D. Sidebar nav</text>
+        <rect x="960" y="285" width="280" height="70" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="970" y="295" width="260" height="55"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Direct entry into any feature: Clients, Search, Sectors, Models, AI, etc.</div></foreignObject>
+        <!-- Annotation -->
+        <rect x="270" y="180" width="220" height="50" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="280" y="188" width="200" height="42"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:10px;color:#1a1a1a;text-align:center;font-style:italic;">Stat cards link directly: AUM → Clients list; Alerts → Shariah Dashboard</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Open as Saad — 12 clients, multiple Shariah alerts, several rows in the activity feed. Pause on the dashboard for 5 seconds before clicking anything; the density tells the story.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 3. CLIENTS -->
+  <!-- ============================================================== -->
+  <section class="flow" id="clients">
+    <header>
+      <h2>3 · Clients</h2>
+      <p class="subtitle">List → filter → drill into a client → walk the 5 tabs. The advisor's most-visited module.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 500" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="120" y="40" font-size="11" font-weight="700">1. Click "Clients"</text>
+        <rect x="20" y="50" width="200" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar nav → /clients.</div></foreignObject>
+        <line x1="220" y1="90" x2="265" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah3)"/>
+        <text x="370" y="40" font-size="11" font-weight="700">2. List loads</text>
+        <rect x="270" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="280" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Table: name · AUM · YTD · Shariah · activity. Status badges.</div></foreignObject>
+        <line x1="470" y1="90" x2="515" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah3)"/>
+        <text x="620" y="40" font-size="11" font-weight="700">3. Apply filters</text>
+        <rect x="520" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="530" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">All / Active / At-risk · Shariah compliant / drift · New (≤30d).</div></foreignObject>
+        <line x1="720" y1="90" x2="765" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah3)"/>
+        <text x="870" y="40" font-size="11" font-weight="700">4. Click a row</text>
+        <rect x="770" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="780" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Navigate to /clients/&lt;id&gt;.</div></foreignObject>
+        <line x1="970" y1="90" x2="1015" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah3)"/>
+        <text x="1120" y="40" font-size="11" font-weight="700">5. Client Detail loads</text>
+        <rect x="1020" y="50" width="220" height="80" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1030" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Server fetches portfolio + holdings + activity + notes.</div></foreignObject>
+
+        <!-- Tabs row -->
+        <line x1="1130" y1="130" x2="1130" y2="200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah3)"/>
+        <text x="1140" y="160" font-size="10" font-style="italic">5 tabs</text>
+        <text x="120" y="225" font-size="11" font-weight="700">6a. Portfolio tab</text>
+        <rect x="20" y="235" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="247" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Donut by asset class + holdings table with drift %.</div></foreignObject>
+
+        <text x="370" y="225" font-size="11" font-weight="700">6b. Performance tab</text>
+        <rect x="270" y="235" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="280" y="247" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">YTD chart vs benchmark + monthly returns.</div></foreignObject>
+
+        <text x="620" y="225" font-size="11" font-weight="700">6c. Activity tab</text>
+        <rect x="520" y="235" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="530" y="247" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Last 90d transactions list — buys, sells, rebalances.</div></foreignObject>
+
+        <text x="870" y="225" font-size="11" font-weight="700">6d. Documents tab</text>
+        <rect x="770" y="235" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="780" y="247" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Statements, KYC, agreements (placeholder list).</div></foreignObject>
+
+        <text x="1120" y="225" font-size="11" font-weight="700">6e. Notes tab</text>
+        <rect x="1020" y="235" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1030" y="247" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Threaded notes per advisor. Add / delete (server action).</div></foreignObject>
+
+        <!-- Add note system action -->
+        <line x1="1130" y1="315" x2="1130" y2="370" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah3)"/>
+        <text x="1180" y="395" font-size="11" font-weight="700">7. Save note</text>
+        <rect x="1020" y="405" width="220" height="60" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1030" y="415" width="200" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">addNote() server action — Note row created, list re-renders.</div></foreignObject>
+
+        <!-- Alpaca link card hint -->
+        <rect x="20" y="370" width="500" height="60" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="30" y="378" width="480" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;font-style:italic;">If client is linked to an Alpaca model, an additional "Alpaca link" card appears with version + tweaks editor. See Flow 11.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Open Saad's #1 client by AUM. Walk all 5 tabs in order; on the Notes tab, type a one-line note and Save to show the server action.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 4. ASSET SEARCH -->
+  <!-- ============================================================== -->
+  <section class="flow" id="search">
+    <header>
+      <h2>4 · Universal Asset Search</h2>
+      <p class="subtitle">50-asset Saudi + global dataset. Filter, drill, select, route. The most-used cross-feature jumping-off point.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 540" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="120" y="40" font-size="11" font-weight="700">1. Click "Search"</text>
+        <rect x="20" y="50" width="200" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar → /search. Universal Search loads.</div></foreignObject>
+        <line x1="220" y1="90" x2="265" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah4)"/>
+        <text x="370" y="40" font-size="11" font-weight="700">2. Read rule banner</text>
+        <rect x="270" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="280" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">"Minimum order: 1 share per asset" info chip at top.</div></foreignObject>
+        <line x1="470" y1="90" x2="515" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah4)"/>
+        <text x="620" y="40" font-size="11" font-weight="700">3. Type query</text>
+        <rect x="520" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="530" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Debounced 180ms. Searches symbol + name (AR/EN).</div></foreignObject>
+        <line x1="720" y1="90" x2="765" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah4)"/>
+        <text x="870" y="40" font-size="11" font-weight="700">4. Apply sidebar filters</text>
+        <rect x="770" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="780" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Class · Sector · Region · Cap · Shariah. Multi-select.</div></foreignObject>
+        <line x1="990" y1="90" x2="1035" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah4)"/>
+        <text x="1140" y="40" font-size="11" font-weight="700">5. Read results</text>
+        <rect x="1040" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1050" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Symbol · Name · Class · Price · YTD · Shariah · Purification/sh.</div></foreignObject>
+
+        <line x1="1140" y1="130" x2="1140" y2="200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah4)"/>
+        <text x="1140" y="225" font-size="11" font-weight="700" text-anchor="middle">6. Click a row OR checkbox</text>
+
+        <polygon points="1140,235 1230,355 1050,355" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <text x="1140" y="305" text-anchor="middle" font-size="11" font-weight="700">Action?</text>
+
+        <!-- Branch A: Open drawer -->
+        <line x1="1050" y1="355" x2="800" y2="395" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah4)"/>
+        <text x="600" y="430" font-size="11" font-weight="700">A. Row click → Drawer</text>
+        <rect x="500" y="440" width="280" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="510" y="452" width="260" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Side drawer: 90d chart · fundamentals · purification · Shariah reasoning · Min order: 1 share.</div></foreignObject>
+
+        <!-- Branch B: Checkbox -->
+        <line x1="1230" y1="355" x2="1300" y2="395" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah4)"/>
+        <text x="1180" y="430" font-size="11" font-weight="700">B. Checkbox</text>
+        <rect x="1040" y="440" width="280" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1050" y="452" width="260" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Sticky selection bar: 3 CTAs → Add to Model · Add to Client · Optimize.</div></foreignObject>
+
+        <!-- Server action -->
+        <line x1="1180" y1="520" x2="500" y2="520" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="500" y1="520" x2="380" y2="430" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah4)"/>
+        <text x="220" y="395" font-size="11" font-weight="700">7. Server action persists</text>
+        <rect x="120" y="405" width="320" height="60" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="130" y="415" width="300" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">addAssetsToModel() / addAssetsToClient() — or route to /optimizer?symbols=…</div></foreignObject>
+
+        <!-- Purification annotation -->
+        <rect x="20" y="180" width="220" height="60" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="30" y="188" width="200" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;font-style:italic;">Purification = annual per-share charity amount for incidental impure income. Hover for rate.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Type "AAPL" → point at purification column → open drawer → close → check 3 boxes → press "Optimize". Smooth transition to Flow 6.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 5. SECTOR HEATMAP & BASKET TRADING -->
+  <!-- ============================================================== -->
+  <section class="flow" id="sectors">
+    <header>
+      <h2>5 · Sector Heatmap &amp; Basket Trading</h2>
+      <p class="subtitle">Top-down market view. Sectors → drill into one → select gainers/movers → basket buy for a chosen client in one shot.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 460" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ah5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="120" y="40" font-size="11" font-weight="700">1. Click "Sectors"</text>
+        <rect x="20" y="50" width="200" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar → /sectors.</div></foreignObject>
+        <line x1="220" y1="90" x2="265" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah5)"/>
+        <text x="370" y="40" font-size="11" font-weight="700">2. Heatmap renders</text>
+        <rect x="270" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="280" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">11 GICS sectors · color by today's % move · YTD inside cell.</div></foreignObject>
+        <line x1="470" y1="90" x2="515" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah5)"/>
+        <text x="620" y="40" font-size="11" font-weight="700">3. Pick client (sticky)</text>
+        <rect x="520" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="530" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Header client picker. Persists via ?client= URL param.</div></foreignObject>
+        <line x1="720" y1="90" x2="765" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah5)"/>
+        <text x="870" y="40" font-size="11" font-weight="700">4. Click a sector cell</text>
+        <rect x="770" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="780" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">e.g. Tech → /sectors/tech?client=…</div></foreignObject>
+        <line x1="970" y1="90" x2="1015" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah5)"/>
+        <text x="1120" y="40" font-size="11" font-weight="700">5. Sector detail · 3 tabs</text>
+        <rect x="1020" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1030" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Movers · Top gainers · All — Shariah-screened.</div></foreignObject>
+
+        <line x1="1130" y1="130" x2="1130" y2="200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah5)"/>
+        <text x="1230" y="225" font-size="11" font-weight="700">6. Multi-select rows</text>
+        <rect x="1020" y="235" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1030" y="247" width="200" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Tick checkbox on 1+ holdings. Basket bar floats up.</div></foreignObject>
+
+        <line x1="1020" y1="275" x2="730" y2="275" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah5)"/>
+        <text x="630" y="225" font-size="11" font-weight="700">7. Basket bar → Buy</text>
+        <rect x="520" y="235" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="530" y="247" width="180" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Shows total SAR + # symbols + client. Click "Buy".</div></foreignObject>
+
+        <line x1="520" y1="275" x2="475" y2="275" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah5)"/>
+        <text x="370" y="225" font-size="11" font-weight="700">8. Confirm modal</text>
+        <rect x="270" y="235" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="280" y="247" width="180" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Lists each symbol · qty · est. price. "Confirm" CTA.</div></foreignObject>
+
+        <line x1="270" y1="275" x2="225" y2="275" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah5)"/>
+        <text x="120" y="225" font-size="11" font-weight="700">9. Server: execute</text>
+        <rect x="20" y="235" width="200" height="80" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="247" width="180" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">buyBasket() — creates Transactions, updates Holdings, returns to detail.</div></foreignObject>
+
+        <rect x="520" y="350" width="500" height="60" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="530" y="358" width="480" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;font-style:italic;">All buys round to integer shares (Min 1 rule from Flow 4). Trades reflect immediately in Client Detail · Activity tab.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Pick Tech, select the 3 top gainers, basket buy for ~50K SAR. Then jump to that client's Detail → Activity tab — the buys appear at the top of the timeline.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 6. OPTIMIZER -->
+  <!-- ============================================================== -->
+  <section class="flow" id="optimizer">
+    <header>
+      <h2>6 · Portfolio Optimizer</h2>
+      <p class="subtitle">Pick assets → choose method → tweak constraints → run → apply weights. 4 methods produce 4 distinct curves.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 460" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ah6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="130" y="40" font-size="11" font-weight="700">1. Enter Optimizer</text>
+        <rect x="20" y="50" width="220" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">From sidebar OR Asset Search selection bar OR Model card OR Client Detail.</div></foreignObject>
+        <line x1="240" y1="90" x2="285" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah6)"/>
+        <text x="390" y="40" font-size="11" font-weight="700">2. Asset table</text>
+        <rect x="290" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Pre-loaded from source. Add / remove rows. μ, σ shown.</div></foreignObject>
+        <line x1="490" y1="90" x2="535" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah6)"/>
+        <text x="640" y="40" font-size="11" font-weight="700">3. Config panel</text>
+        <rect x="540" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="550" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Pick method · cash reserve · sector caps · per-asset bounds.</div></foreignObject>
+        <line x1="740" y1="90" x2="785" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah6)"/>
+        <polygon points="880,50 950,170 810,170" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <text x="880" y="115" text-anchor="middle" font-size="10" font-weight="700">Method?</text>
+
+        <!-- Four method branches -->
+        <line x1="880" y1="170" x2="160" y2="225" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah6)"/>
+        <text x="120" y="220" font-size="10" font-weight="700">MV</text>
+        <rect x="20" y="230" width="180" height="60" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="240" width="160" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Mean-Variance: μ vs σ trade-off slider.</div></foreignObject>
+
+        <line x1="880" y1="170" x2="420" y2="225" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah6)"/>
+        <text x="380" y="220" font-size="10" font-weight="700">RP</text>
+        <rect x="220" y="230" width="180" height="60" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="230" y="240" width="160" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Risk Parity: equal risk contribution per asset.</div></foreignObject>
+
+        <line x1="880" y1="170" x2="660" y2="225" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah6)"/>
+        <text x="620" y="220" font-size="10" font-weight="700">EW</text>
+        <rect x="420" y="230" width="180" height="60" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="430" y="240" width="160" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Equal-Weight: 99% / N baseline. Simple sanity check.</div></foreignObject>
+
+        <line x1="880" y1="170" x2="880" y2="225" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah6)"/>
+        <text x="850" y="220" font-size="10" font-weight="700">BL</text>
+        <rect x="620" y="230" width="180" height="60" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="630" y="240" width="160" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Black-Litterman: prior + advisor views blend.</div></foreignObject>
+
+        <!-- Run -->
+        <line x1="510" y1="290" x2="510" y2="335" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah6)"/>
+        <text x="600" y="360" font-size="11" font-weight="700">4. Click "Run"</text>
+        <rect x="420" y="370" width="200" height="60" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="430" y="380" width="180" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Solve → constraint projection → renormalize to 99%.</div></foreignObject>
+
+        <line x1="620" y1="400" x2="665" y2="400" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah6)"/>
+        <text x="770" y="360" font-size="11" font-weight="700">5. Results panel</text>
+        <rect x="670" y="370" width="200" height="60" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="680" y="380" width="180" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Weights · expected return · vol · Sharpe · donut.</div></foreignObject>
+
+        <line x1="870" y1="400" x2="915" y2="400" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah6)"/>
+        <text x="1020" y="360" font-size="11" font-weight="700">6. Manual tweak (opt.)</text>
+        <rect x="920" y="370" width="200" height="60" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="930" y="380" width="180" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Drag a slider; stats recompute live.</div></foreignObject>
+
+        <line x1="1120" y1="400" x2="1165" y2="400" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah6)"/>
+        <text x="1270" y="360" font-size="11" font-weight="700">7. Apply</text>
+        <rect x="1170" y="370" width="200" height="60" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1180" y="380" width="180" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">applyWeightsToModel() / applyWeightsToClient() server action.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Run Equal-Weight first (instant baseline), then Mean-Variance — point at how weights shift toward higher-Sharpe names. Tweak one slider, watch stats update. Apply to a model.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 7. ALLOCATION ORDER -->
+  <!-- ============================================================== -->
+  <section class="flow" id="allocation">
+    <header>
+      <h2>7 · Allocation Order</h2>
+      <p class="subtitle">6-step wizard to route a SAR amount across multiple funds + multiple clients in one transaction.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 280" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ah7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="120" y="40" font-size="11" font-weight="700">1. Enter wizard</text>
+        <rect x="20" y="50" width="180" height="90" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="160" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar → /allocation.</div></foreignObject>
+        <line x1="200" y1="95" x2="225" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah7)"/>
+        <text x="320" y="40" font-size="11" font-weight="700">Step 1 · Funds</text>
+        <rect x="230" y="50" width="180" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="240" y="62" width="160" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Pick funds + target weights. Sum must = 100%.</div></foreignObject>
+        <line x1="410" y1="95" x2="435" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah7)"/>
+        <text x="530" y="40" font-size="11" font-weight="700">Step 2 · Clients</text>
+        <rect x="440" y="50" width="180" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="450" y="62" width="160" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Pick eligible clients. Filter by suitability / Shariah.</div></foreignObject>
+        <line x1="620" y1="95" x2="645" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah7)"/>
+        <text x="740" y="40" font-size="11" font-weight="700">Step 3 · Method</text>
+        <rect x="650" y="50" width="180" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="660" y="62" width="160" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Pro-rata AUM · Equal SAR per client.</div></foreignObject>
+        <line x1="830" y1="95" x2="855" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah7)"/>
+        <text x="950" y="40" font-size="11" font-weight="700">Step 4 · Amount</text>
+        <rect x="860" y="50" width="180" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="870" y="62" width="160" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Enter total SAR to deploy.</div></foreignObject>
+        <line x1="1040" y1="95" x2="1065" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah7)"/>
+        <text x="1160" y="40" font-size="11" font-weight="700">Step 5 · Preview</text>
+        <rect x="1070" y="50" width="180" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1080" y="62" width="160" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Table: client × fund → SAR amount + shares.</div></foreignObject>
+        <line x1="1250" y1="95" x2="1290" y2="95" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="1290" y1="95" x2="1290" y2="200" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="1290" y1="200" x2="1245" y2="200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah7)"/>
+        <text x="1140" y="170" font-size="11" font-weight="700">Step 6 · Confirm</text>
+        <rect x="1050" y="180" width="200" height="60" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1060" y="190" width="180" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">executeAllocationOrder() — creates Transactions per pair.</div></foreignObject>
+        <line x1="1050" y1="210" x2="1005" y2="210" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah7)"/>
+        <text x="900" y="170" font-size="11" font-weight="700">Done</text>
+        <rect x="800" y="180" width="200" height="60" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="810" y="190" width="180" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Confirmation screen with order ID + summary.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Do a 100K SAR pro-rata-AUM order across 3 funds and 5 clients. Preview shows the math; confirm runs the server action. Check one client's Activity tab — buys are itemized.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 8. REBALANCE -->
+  <!-- ============================================================== -->
+  <section class="flow" id="rebalance">
+    <header>
+      <h2>8 · Rebalance</h2>
+      <p class="subtitle">Detect drift across selected portfolios, review the trades needed, execute in one batch.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 250" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ah8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="130" y="40" font-size="11" font-weight="700">1. Enter wizard</text>
+        <rect x="20" y="50" width="220" height="90" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar → /rebalance.</div></foreignObject>
+        <line x1="240" y1="95" x2="285" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah8)"/>
+        <text x="400" y="40" font-size="11" font-weight="700">Step 1 · Pick portfolios</text>
+        <rect x="290" y="50" width="220" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Select 1+ client portfolios. Optional model-portfolio filter.</div></foreignObject>
+        <line x1="510" y1="95" x2="555" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah8)"/>
+        <text x="670" y="40" font-size="11" font-weight="700">Step 2 · Drift threshold</text>
+        <rect x="560" y="50" width="220" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">e.g. trade only assets &gt;5% from target. Slider 1–20%.</div></foreignObject>
+        <line x1="780" y1="95" x2="825" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah8)"/>
+        <text x="940" y="40" font-size="11" font-weight="700">Step 3 · Review trades</text>
+        <rect x="830" y="50" width="220" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="840" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Table: client × symbol → BUY or SELL, qty, est. SAR.</div></foreignObject>
+        <line x1="1050" y1="95" x2="1095" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah8)"/>
+        <text x="1240" y="40" font-size="11" font-weight="700">Step 4 · Execute</text>
+        <rect x="1100" y="50" width="280" height="90" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1110" y="62" width="260" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">executeRebalance() — creates Transactions + RebalanceJob. Returns trade count + total notional.</div></foreignObject>
+        <rect x="290" y="170" width="760" height="60" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="300" y="180" width="740" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;font-style:italic;">All trades rounded to integer shares (Min 1 share rule). Cash-balance check: if a client has insufficient cash for the BUY leg, the trade is flagged but not blocked — advisor decides.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Select 3 clients with visible drift, set threshold to 5%, walk to Step 3 — point at how it shows BUYs and SELLs side by side. Don't actually execute unless you want the demo data to mutate.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 9. MODEL PORTFOLIOS -->
+  <!-- ============================================================== -->
+  <section class="flow" id="models">
+    <header>
+      <h2>9 · Model Portfolios</h2>
+      <p class="subtitle">Reusable target allocations. Create → assign to many clients in one action.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 380" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ah9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="120" y="40" font-size="11" font-weight="700">1. Click "Models"</text>
+        <rect x="20" y="50" width="200" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar → /models.</div></foreignObject>
+        <line x1="220" y1="90" x2="265" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah9)"/>
+        <text x="370" y="40" font-size="11" font-weight="700">2. List</text>
+        <rect x="270" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="280" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">All advisor's models with # holdings + # linked clients.</div></foreignObject>
+        <line x1="470" y1="90" x2="515" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah9)"/>
+        <polygon points="620,50 690,170 555,170" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <text x="620" y="120" text-anchor="middle" font-size="10" font-weight="700">Action?</text>
+
+        <!-- New -->
+        <line x1="555" y1="170" x2="180" y2="230" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah9)"/>
+        <text x="140" y="220" font-size="10" font-weight="700">New</text>
+        <rect x="20" y="230" width="240" height="70" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="240" width="220" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Create modal: name AR/EN · description · target holdings %.</div></foreignObject>
+
+        <!-- Edit -->
+        <line x1="620" y1="170" x2="430" y2="230" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah9)"/>
+        <text x="390" y="220" font-size="10" font-weight="700">Edit</text>
+        <rect x="290" y="230" width="240" height="70" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="240" width="220" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Update targets · rename · adjust description.</div></foreignObject>
+
+        <!-- Apply -->
+        <line x1="690" y1="170" x2="700" y2="230" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah9)"/>
+        <text x="690" y="220" font-size="10" font-weight="700">Apply</text>
+        <rect x="560" y="230" width="280" height="70" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="240" width="260" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">"Apply to clients" modal — multi-select picker.</div></foreignObject>
+
+        <!-- Delete -->
+        <line x1="690" y1="170" x2="1000" y2="230" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah9)"/>
+        <text x="960" y="220" font-size="10" font-weight="700">Delete</text>
+        <rect x="870" y="230" width="240" height="70" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="880" y="240" width="220" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Confirm → unlink all clients first, then delete.</div></foreignObject>
+
+        <!-- Save server actions -->
+        <line x1="140" y1="300" x2="140" y2="335" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah9)"/>
+        <line x1="410" y1="300" x2="410" y2="335" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah9)"/>
+        <line x1="700" y1="300" x2="700" y2="335" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah9)"/>
+        <line x1="990" y1="300" x2="990" y2="335" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ah9)"/>
+
+        <rect x="20" y="345" width="240" height="40" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="355" width="220" height="30"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">createModel()</div></foreignObject>
+        <rect x="290" y="345" width="240" height="40" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="355" width="220" height="30"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">updateModel()</div></foreignObject>
+        <rect x="560" y="345" width="280" height="40" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="355" width="260" height="30"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">linkModelToClients() — fan-out write</div></foreignObject>
+        <rect x="870" y="345" width="240" height="40" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="880" y="355" width="220" height="30"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">deleteModel()</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Open one of Saad's existing models, click "Apply to clients" — select 3 — confirm. Then jump to one of those clients' Detail to show the assignment took effect.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 10. MADKHOL AI -->
+  <!-- ============================================================== -->
+  <section class="flow" id="madkhol-ai">
+    <header>
+      <h2>10 · Madkhol AI Trading</h2>
+      <p class="subtitle">Connect the AI trading engine, browse suggestions, approve / reject. Hard 10K SAR minimum per client to receive trades.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 460" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ahA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="120" y="40" font-size="11" font-weight="700">1. Click "Madkhol AI"</text>
+        <rect x="20" y="50" width="200" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar entry with AI badge → /madkhol-ai.</div></foreignObject>
+        <line x1="220" y1="90" x2="265" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahA)"/>
+        <text x="370" y="40" font-size="11" font-weight="700">2. Landing page</text>
+        <rect x="270" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="280" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Hero + 10K SAR min chip + perf chart + FAQ.</div></foreignObject>
+        <line x1="470" y1="90" x2="515" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahA)"/>
+        <polygon points="620,50 690,170 555,170" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <text x="620" y="115" text-anchor="middle" font-size="11" font-weight="700">Connected?</text>
+
+        <!-- Not connected -->
+        <line x1="555" y1="170" x2="400" y2="220" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahA)"/>
+        <text x="350" y="215" font-size="10" font-weight="700" fill="#DC2626">NO</text>
+        <text x="360" y="245" font-size="11" font-weight="700">3a. Connect modal · 3 steps</text>
+        <rect x="240" y="255" width="280" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="250" y="267" width="260" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Step 1: terms + checkbox · Step 2: engagement level + 10K min card · Step 3: review.</div></foreignObject>
+
+        <line x1="380" y1="335" x2="380" y2="370" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahA)"/>
+        <text x="420" y="395" font-size="11" font-weight="700">4a. Confirm</text>
+        <rect x="240" y="405" width="280" height="50" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="250" y="412" width="260" height="42"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">connectMadkholAi() — sets connectedAt + engagement level.</div></foreignObject>
+
+        <!-- Connected -->
+        <line x1="690" y1="170" x2="900" y2="220" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahA)"/>
+        <text x="730" y="215" font-size="10" font-weight="700" fill="#16A34A">YES</text>
+        <text x="900" y="245" font-size="11" font-weight="700">3b. Suggestions inbox</text>
+        <rect x="780" y="255" width="280" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="790" y="267" width="260" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">4 mock cards: ticker · client · thesis · confidence · risk band.</div></foreignObject>
+
+        <line x1="920" y1="335" x2="920" y2="370" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahA)"/>
+        <text x="900" y="395" font-size="11" font-weight="700">4b. Approve / Reject</text>
+        <rect x="780" y="405" width="280" height="50" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="790" y="412" width="260" height="42"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">approveSuggestion() — creates Transaction · rejectSuggestion() — logs only.</div></foreignObject>
+
+        <rect x="1100" y="50" width="280" height="120" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="1110" y="60" width="260" height="105"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;font-style:italic;">Constraint: AI begins trading only once a client's allocated balance ≥ 10,000 SAR. Below threshold, the client is excluded from the suggestion stream and shown a "below minimum" notice on their Portfolio tab.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Open as Sara (not yet connected) → walk the Connect modal up to Step 3 → don't actually confirm. Then open as Saad (connected) → show the Suggestions inbox + the dashboard banner.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 11. ALPACA MODELS -->
+  <!-- ============================================================== -->
+  <section class="flow" id="alpaca">
+    <header>
+      <h2>11 · Alpaca Model Portfolios</h2>
+      <p class="subtitle">External model definition → link clients → per-client tweaks → sync → trade-by-trade approval. The institutional execution path.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 470" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ahB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="130" y="40" font-size="11" font-weight="700">1. Click "Alpaca Models"</text>
+        <rect x="20" y="50" width="220" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar with α badge → /alpaca-models.</div></foreignObject>
+        <line x1="240" y1="90" x2="285" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahB)"/>
+        <text x="390" y="40" font-size="11" font-weight="700">2. Models list</text>
+        <rect x="290" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Each card: name · version · # links · last sync.</div></foreignObject>
+        <line x1="490" y1="90" x2="535" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahB)"/>
+        <text x="640" y="40" font-size="11" font-weight="700">3. Create / Edit model</text>
+        <rect x="540" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="550" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Modal: name AR/EN · target holdings dict · version auto-bumps.</div></foreignObject>
+        <line x1="760" y1="90" x2="805" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahB)"/>
+        <text x="910" y="40" font-size="11" font-weight="700">4. Link clients</text>
+        <rect x="810" y="50" width="200" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="820" y="62" width="180" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Multi-select picker → creates AlpacaModelLink rows.</div></foreignObject>
+        <line x1="1010" y1="90" x2="1055" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahB)"/>
+        <text x="1160" y="40" font-size="11" font-weight="700">5. Per-client tweaks</text>
+        <rect x="1060" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1070" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Client Detail "Alpaca link" card → editor: override weights, exclude tickers.</div></foreignObject>
+
+        <line x1="1170" y1="130" x2="1170" y2="200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahB)"/>
+        <text x="1260" y="225" font-size="11" font-weight="700">6. Request sync</text>
+        <rect x="1060" y="235" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1070" y="247" width="200" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">From Models page or Client Detail → "Sync now". Routes to review page.</div></foreignObject>
+
+        <line x1="1060" y1="275" x2="1015" y2="275" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahB)"/>
+        <text x="910" y="225" font-size="11" font-weight="700">7. Resolve trades</text>
+        <rect x="810" y="235" width="200" height="80" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="820" y="247" width="180" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">resolveEffective() merges base targets + tweaks; computes trades vs current holdings.</div></foreignObject>
+
+        <line x1="810" y1="275" x2="765" y2="275" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahB)"/>
+        <text x="660" y="225" font-size="11" font-weight="700">8. Sync review</text>
+        <rect x="540" y="235" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="550" y="247" width="200" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Per client: trades · net cash delta · warnings. Approve / Skip / Approve all.</div></foreignObject>
+
+        <line x1="540" y1="275" x2="495" y2="275" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahB)"/>
+        <text x="390" y="225" font-size="11" font-weight="700">9. Server: commit</text>
+        <rect x="290" y="235" width="200" height="80" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="247" width="180" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">approveSync() per row — creates Transactions, marks link non-pending, bumps lastSyncedAt.</div></foreignObject>
+
+        <rect x="20" y="350" width="1260" height="80" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="30" y="362" width="1240" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;font-style:italic;">"Tweaks" are deliberate per-client deviations from the base model — e.g. exclude Apple for client X, double-weight gold for client Y. The model owner sees aggregate version drift; the client owner sees their own customisation.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> The Sync Review screen is the most institutional-looking surface in the portal. Show it on a 2nd monitor if possible — the trade-by-trade approval pattern is what compliance teams care about.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 12. PROJECTIONS -->
+  <!-- ============================================================== -->
+  <section class="flow" id="projections">
+    <header>
+      <h2>12 · Performance Projections</h2>
+      <p class="subtitle">Monte Carlo over 10k paths for any portfolio, model, or Alpaca model. Cached deterministically by scenario hash.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 290" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ahC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="130" y="40" font-size="11" font-weight="700">1. Enter Projections</text>
+        <rect x="20" y="50" width="220" height="90" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar OR Client Detail link OR Alpaca model card.</div></foreignObject>
+        <line x1="240" y1="95" x2="285" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahC)"/>
+        <text x="400" y="40" font-size="11" font-weight="700">2. Pick subject</text>
+        <rect x="290" y="50" width="220" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Client portfolio · Model · Alpaca model. Shows current AUM.</div></foreignObject>
+        <line x1="510" y1="95" x2="555" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahC)"/>
+        <text x="670" y="40" font-size="11" font-weight="700">3. Set scenario</text>
+        <rect x="560" y="50" width="220" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Horizon (3/5/10/20y) · Monthly contribution · withdrawal · CI 50/80/95%.</div></foreignObject>
+        <line x1="780" y1="95" x2="825" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahC)"/>
+        <text x="940" y="40" font-size="11" font-weight="700">4. Click "Run"</text>
+        <rect x="830" y="50" width="220" height="90" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="840" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Hash inputs → cache lookup. Miss → spawn 10k Cholesky-sampled paths.</div></foreignObject>
+        <line x1="1050" y1="95" x2="1095" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahC)"/>
+        <text x="1210" y="40" font-size="11" font-weight="700">5. Results panel</text>
+        <rect x="1100" y="50" width="280" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1110" y="62" width="260" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Fan chart (p5-p95) · median ending · prob beat inflation · annualized μ/σ.</div></foreignObject>
+
+        <rect x="290" y="180" width="760" height="60" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="300" y="190" width="740" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;font-style:italic;">Same inputs → identical seed → identical run, every time. History list shows prior runs with their hash so they're auditable.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Run a 10-year horizon at 80% CI for a top client. Then change CI to 95% — fan widens visibly. Re-run with the original inputs — cache hit, instant return.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 13. SHARIAH -->
+  <!-- ============================================================== -->
+  <section class="flow" id="shariah">
+    <header>
+      <h2>13 · Shariah Dashboard</h2>
+      <p class="subtitle">Triage view of every non-compliant or drifting holding across the entire book.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 280" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ahD" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="130" y="40" font-size="11" font-weight="700">1. Click "Shariah"</text>
+        <rect x="20" y="50" width="220" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar (or stat-card alerts count) → /shariah.</div></foreignObject>
+        <line x1="240" y1="90" x2="285" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahD)"/>
+        <text x="400" y="40" font-size="11" font-weight="700">2. Open alerts list</text>
+        <rect x="290" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Sorted by severity. Each alert: fund · client · status.</div></foreignObject>
+        <line x1="510" y1="90" x2="555" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahD)"/>
+        <text x="670" y="40" font-size="11" font-weight="700">3. Click an alert</text>
+        <rect x="560" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Detail drawer: holding %, reason, screening rule, impacted clients.</div></foreignObject>
+        <line x1="780" y1="90" x2="825" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahD)"/>
+        <text x="940" y="40" font-size="11" font-weight="700">4. Resolve</text>
+        <rect x="830" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="840" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">3 actions: Sell out · Acknowledge drift · Escalate to compliance.</div></foreignObject>
+        <line x1="1050" y1="90" x2="1095" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahD)"/>
+        <text x="1210" y="40" font-size="11" font-weight="700">5. Server logs</text>
+        <rect x="1100" y="50" width="280" height="80" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1110" y="62" width="260" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">resolveShariahAlert() — writes audit row, alert closed, list refreshes.</div></foreignObject>
+
+        <rect x="290" y="170" width="760" height="60" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="300" y="180" width="740" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;font-style:italic;">Each alert is born from the nightly screening job: non-compliant holdings &gt;5% of portfolio = ALERT; 0-5% = DRIFT; 0% = OK.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Open the highest-severity alert in Saad's book. Use "Sell out" as the demo action — it's the cleanest server-action close.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 14. ZAKAT -->
+  <!-- ============================================================== -->
+  <section class="flow" id="zakat">
+    <header>
+      <h2>14 · Zakat</h2>
+      <p class="subtitle">Compute Zakat for any client on their portfolio + cash. Generates a per-client Hijri-dated PDF.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 280" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ahE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="130" y="40" font-size="11" font-weight="700">1. Click "Zakat"</text>
+        <rect x="20" y="50" width="220" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar → /zakat.</div></foreignObject>
+        <line x1="240" y1="90" x2="285" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahE)"/>
+        <text x="400" y="40" font-size="11" font-weight="700">2. Pick client</text>
+        <rect x="290" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Shows Hijri year-end + days remaining + total wealth.</div></foreignObject>
+        <line x1="510" y1="90" x2="555" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahE)"/>
+        <text x="670" y="40" font-size="11" font-weight="700">3. Server computes</text>
+        <rect x="560" y="50" width="220" height="80" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sum: cash + Shariah-compliant assets - debts. Apply 2.5%.</div></foreignObject>
+        <line x1="780" y1="90" x2="825" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahE)"/>
+        <text x="940" y="40" font-size="11" font-weight="700">4. Report card</text>
+        <rect x="830" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="840" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Breakdown by asset type + total due + Hijri date.</div></foreignObject>
+        <line x1="1050" y1="90" x2="1095" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahE)"/>
+        <text x="1210" y="40" font-size="11" font-weight="700">5. Generate PDF</text>
+        <rect x="1100" y="50" width="280" height="80" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1110" y="62" width="260" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">generateZakatReport() — stores ZakatReport row · downloadable.</div></foreignObject>
+
+        <rect x="290" y="170" width="760" height="60" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="300" y="180" width="740" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;font-style:italic;">Hijri year-end varies per client (entered at onboarding). Demo shows banner "X days to year-end" if within 30 days.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Pick a client whose Hijri year-end is within 30 days — the banner adds urgency. Generate the report, click the PDF preview.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 15. MIRATH -->
+  <!-- ============================================================== -->
+  <section class="flow" id="mirath">
+    <header>
+      <h2>15 · Mirath Inheritance</h2>
+      <p class="subtitle">Compute fixed Quranic shares for any family structure. Donut visualization + per-heir table + rationale.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 280" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ahF" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="130" y="40" font-size="11" font-weight="700">1. Click "Mirath"</text>
+        <rect x="20" y="50" width="220" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar → /mirath. Optional ?client= preselect.</div></foreignObject>
+        <line x1="240" y1="90" x2="285" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahF)"/>
+        <text x="400" y="40" font-size="11" font-weight="700">2. Pick client</text>
+        <rect x="290" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Auto-prefills family structure from client record.</div></foreignObject>
+        <line x1="510" y1="90" x2="555" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahF)"/>
+        <text x="670" y="40" font-size="11" font-weight="700">3. Configure family</text>
+        <rect x="560" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Gender · spouse · sons · daughters · father · mother.</div></foreignObject>
+        <line x1="780" y1="90" x2="825" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahF)"/>
+        <text x="940" y="40" font-size="11" font-weight="700">4. Auto-compute</text>
+        <rect x="830" y="50" width="220" height="80" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="840" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">calculateShares() — applies Quranic fractions + residue ('asaba) rules.</div></foreignObject>
+        <line x1="1050" y1="90" x2="1095" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahF)"/>
+        <text x="1210" y="40" font-size="11" font-weight="700">5. Shares panel</text>
+        <rect x="1100" y="50" width="280" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1110" y="62" width="260" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;color:#1a1a1a;">Donut by heir · table with %, SAR amount, rationale · Print / Share.</div></foreignObject>
+
+        <rect x="290" y="170" width="760" height="60" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="300" y="180" width="740" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;font-style:italic;">Estate value comes from the client's AUM. Calculation is live: change "sons" from 2→3 and the donut re-distributes instantly.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> The live recalc is the magic. Increment "sons" from 2→3 mid-pitch — the donut animates and the table updates. Hits Saudi cultural relevance immediately.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 16. GOSI -->
+  <!-- ============================================================== -->
+  <section class="flow" id="gosi">
+    <header>
+      <h2>16 · GOSI Gap Planning</h2>
+      <p class="subtitle">Project a client's GOSI pension against their target retirement income; plan the bridge.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 280" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ahG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="130" y="40" font-size="11" font-weight="700">1. Click "GOSI"</text>
+        <rect x="20" y="50" width="220" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar → /gosi. Optional ?client= preselect.</div></foreignObject>
+        <line x1="240" y1="90" x2="285" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahG)"/>
+        <text x="400" y="40" font-size="11" font-weight="700">2. Pick client</text>
+        <rect x="290" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Shows current age + assumed retirement age.</div></foreignObject>
+        <line x1="510" y1="90" x2="555" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahG)"/>
+        <text x="670" y="40" font-size="11" font-weight="700">3. Enter projection</text>
+        <rect x="560" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Final salary · GOSI months · target SAR/month at retirement.</div></foreignObject>
+        <line x1="780" y1="90" x2="825" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahG)"/>
+        <text x="940" y="40" font-size="11" font-weight="700">4. Compute gap</text>
+        <rect x="830" y="50" width="220" height="80" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="840" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">GOSI pension formula → monthly amount. Gap = target − GOSI.</div></foreignObject>
+        <line x1="1050" y1="90" x2="1095" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahG)"/>
+        <text x="1210" y="40" font-size="11" font-weight="700">5. Bridge plan</text>
+        <rect x="1100" y="50" width="280" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1110" y="62" width="260" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Stacked area chart: GOSI vs portfolio drawdown vs target. Save plan.</div></foreignObject>
+
+        <rect x="290" y="170" width="760" height="60" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="300" y="180" width="740" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;font-style:italic;">GOSI pension formula uses the Saudi Social Insurance law: 2.5% × final salary × months / 12, capped at 100% of final salary.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Pick Khalid Al-Qahtani (the retirement-planning specialist) or one of his typical client profiles. The bridge chart is the visual hook — large red gap = clear need for the advisor.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 17. MESSAGES -->
+  <!-- ============================================================== -->
+  <section class="flow" id="messages">
+    <header>
+      <h2>17 · Messages (WhatsApp mock)</h2>
+      <p class="subtitle">Per-client conversation thread. Mocks the WhatsApp-Business pattern Saudi advisors actually use today.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 240" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ahH" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="130" y="40" font-size="11" font-weight="700">1. Click "Messages"</text>
+        <rect x="20" y="50" width="220" height="90" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar → /messages.</div></foreignObject>
+        <line x1="240" y1="95" x2="285" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahH)"/>
+        <text x="400" y="40" font-size="11" font-weight="700">2. Threads list</text>
+        <rect x="290" y="50" width="220" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Each client = one thread. Last message preview + unread badge.</div></foreignObject>
+        <line x1="510" y1="95" x2="555" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahH)"/>
+        <text x="670" y="40" font-size="11" font-weight="700">3. Open a thread</text>
+        <rect x="560" y="50" width="220" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Right pane: WhatsApp-style bubble layout, RTL-aware.</div></foreignObject>
+        <line x1="780" y1="95" x2="825" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahH)"/>
+        <text x="940" y="40" font-size="11" font-weight="700">4. Type + send</text>
+        <rect x="830" y="50" width="220" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="840" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">AR or EN input. Cmd/Ctrl+Enter to send.</div></foreignObject>
+        <line x1="1050" y1="95" x2="1095" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahH)"/>
+        <text x="1210" y="40" font-size="11" font-weight="700">5. Mock reply</text>
+        <rect x="1100" y="50" width="280" height="90" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1110" y="62" width="260" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Stub auto-reply after 2s. Real WhatsApp API integration in roadmap.</div></foreignObject>
+
+        <rect x="290" y="170" width="760" height="50" fill="#FFD8D8" stroke="#1a1a1a" stroke-width="1" rx="4"/>
+        <foreignObject x="300" y="178" width="740" height="42"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;font-style:italic;">Demo-only stub. Production swap: WhatsApp Business Cloud API or Twilio.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Don't dwell — 30 seconds is enough. Send one Arabic message to show RTL bubbles flip correctly.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 18. MARKETPLACE (ADVISOR) -->
+  <!-- ============================================================== -->
+  <section class="flow" id="marketplace-advisor">
+    <header>
+      <h2>18 · Marketplace — Advisor side</h2>
+      <p class="subtitle">Handle inbound consumer inquiries · edit the public profile · preview how the world sees you.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 460" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ahI" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="130" y="40" font-size="11" font-weight="700">1. Click "Inquiries"</text>
+        <rect x="20" y="50" width="220" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Sidebar → /marketplace/inquiries.</div></foreignObject>
+        <line x1="240" y1="90" x2="285" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahI)"/>
+        <text x="400" y="40" font-size="11" font-weight="700">2. Inquiries list</text>
+        <rect x="290" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">By status: New · Awaiting reply · Scheduled · Closed.</div></foreignObject>
+        <line x1="510" y1="90" x2="555" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahI)"/>
+        <text x="670" y="40" font-size="11" font-weight="700">3. Open thread</text>
+        <rect x="560" y="50" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Consumer name (masked) · message · requested time.</div></foreignObject>
+        <line x1="780" y1="90" x2="825" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahI)"/>
+        <polygon points="920,50 990,170 855,170" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <text x="920" y="115" text-anchor="middle" font-size="11" font-weight="700">Action?</text>
+
+        <line x1="855" y1="170" x2="640" y2="220" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahI)"/>
+        <text x="640" y="215" font-size="10" font-weight="700">Accept</text>
+        <rect x="540" y="225" width="200" height="60" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="550" y="235" width="180" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">acceptInquiry() — status → scheduled.</div></foreignObject>
+
+        <line x1="920" y1="170" x2="920" y2="220" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahI)"/>
+        <text x="920" y="215" font-size="10" font-weight="700">Decline</text>
+        <rect x="820" y="225" width="200" height="60" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="830" y="235" width="180" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">declineInquiry() — status → closed.</div></foreignObject>
+
+        <line x1="990" y1="170" x2="1200" y2="220" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahI)"/>
+        <text x="1200" y="215" font-size="10" font-weight="700">Reply</text>
+        <rect x="1100" y="225" width="200" height="60" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1110" y="235" width="180" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">replyToInquiry() — adds message to thread.</div></foreignObject>
+
+        <!-- Profile side -->
+        <text x="130" y="320" font-size="11" font-weight="700">Profile editor (parallel path)</text>
+        <rect x="20" y="330" width="240" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="342" width="220" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Bio AR/EN · philosophy · fee · specializations · languages · visible toggle.</div></foreignObject>
+        <line x1="260" y1="370" x2="305" y2="370" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahI)"/>
+        <text x="400" y="320" font-size="11" font-weight="700">Save</text>
+        <rect x="310" y="330" width="200" height="80" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="320" y="342" width="180" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">updateAdvisorProfile() — writes through.</div></foreignObject>
+        <line x1="510" y1="370" x2="555" y2="370" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahI)"/>
+        <text x="640" y="320" font-size="11" font-weight="700">Preview</text>
+        <rect x="560" y="330" width="220" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="342" width="200" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">"Preview public profile" opens /consumer/advisor/&lt;id&gt; in new tab.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Saad has 4 seed inquiries in 4 different statuses. Open the "New" one, hit Reply with a one-line response, then jump to Profile editor and click Preview to show the consumer-facing card.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 19. MARKETPLACE (CONSUMER) -->
+  <!-- ============================================================== -->
+  <section class="flow" id="marketplace-consumer">
+    <header>
+      <h2>19 · Marketplace — Consumer side (public)</h2>
+      <p class="subtitle">No auth. Anyone with a browser can discover, compare, and request a meeting with a certified advisor.</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 290" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ahJ" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="130" y="40" font-size="11" font-weight="700">1. Visit URL</text>
+        <rect x="20" y="50" width="220" height="90" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">/consumer/marketplace — public, no auth gate.</div></foreignObject>
+        <line x1="240" y1="95" x2="285" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahJ)"/>
+        <text x="400" y="40" font-size="11" font-weight="700">2. Hero + grid</text>
+        <rect x="290" y="50" width="220" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">10 advisor cards: photo · certified badge · years · specs · AUM.</div></foreignObject>
+        <line x1="510" y1="95" x2="555" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahJ)"/>
+        <text x="670" y="40" font-size="11" font-weight="700">3. Filter / sort</text>
+        <rect x="560" y="50" width="220" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Specialization · Language · Min AUM accepted.</div></foreignObject>
+        <line x1="780" y1="95" x2="825" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahJ)"/>
+        <text x="940" y="40" font-size="11" font-weight="700">4. Click a card</text>
+        <rect x="830" y="50" width="220" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="840" y="62" width="200" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Full advisor profile · bio · philosophy · fee · "Request Meeting".</div></foreignObject>
+        <line x1="1050" y1="95" x2="1095" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahJ)"/>
+        <text x="1210" y="40" font-size="11" font-weight="700">5. Request modal</text>
+        <rect x="1100" y="50" width="280" height="90" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1110" y="62" width="260" height="70"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Name · email · phone · message · proposed time slot.</div></foreignObject>
+
+        <line x1="1240" y1="140" x2="1240" y2="200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahJ)"/>
+        <text x="1230" y="225" font-size="11" font-weight="700" text-anchor="end">6. Submit</text>
+        <rect x="1100" y="235" width="280" height="50" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1110" y="242" width="260" height="42"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">createInquiry() — server-side name masking, lands in advisor's inbox.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Open the marketplace in an incognito window during the demo (no auth) — drives home the "this is what your customers see" point. The 10 cards now show real Saudi portraits.</div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 20. OPERATIONAL -->
+  <!-- ============================================================== -->
+  <section class="flow" id="operational">
+    <header>
+      <h2>20 · Operational (Audit · Reporting · Billing · White-label)</h2>
+      <p class="subtitle">Four polish surfaces that exist for institutional credibility. Less feature, more "yes it's there."</p>
+    </header>
+    <div class="diagram">
+      <svg viewBox="0 0 1400 320" width="1400" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+        <defs><marker id="ahK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+        <text x="130" y="40" font-size="11" font-weight="700">1. Pick from sidebar</text>
+        <rect x="20" y="50" width="220" height="80" fill="#6FA8F5" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="62" width="200" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">Bottom sidebar group: Audit · Reporting · Billing · White-label.</div></foreignObject>
+        <line x1="240" y1="90" x2="285" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahK)"/>
+        <polygon points="380,50 450,170 315,170" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <text x="380" y="120" text-anchor="middle" font-size="11" font-weight="700">Which?</text>
+
+        <line x1="315" y1="170" x2="120" y2="220" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahK)"/>
+        <text x="120" y="215" font-size="10" font-weight="700">Audit</text>
+        <rect x="20" y="225" width="240" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="30" y="237" width="220" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Log of every server action with filters · detail drawer · who/what/when.</div></foreignObject>
+
+        <line x1="380" y1="170" x2="380" y2="220" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahK)"/>
+        <text x="380" y="215" font-size="10" font-weight="700">Reporting</text>
+        <rect x="290" y="225" width="240" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="300" y="237" width="220" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Report builder · pick client/period/scope · mock PDF preview.</div></foreignObject>
+
+        <line x1="450" y1="170" x2="660" y2="220" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahK)"/>
+        <text x="660" y="215" font-size="10" font-weight="700">Billing</text>
+        <rect x="560" y="225" width="240" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="570" y="237" width="220" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Fee structures (AUM bps / flat / hybrid) · per-client assignment · invoice list.</div></foreignObject>
+
+        <line x1="450" y1="170" x2="950" y2="220" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahK)"/>
+        <text x="950" y="215" font-size="10" font-weight="700">White-label</text>
+        <rect x="830" y="225" width="240" height="80" fill="#FFCB31" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="840" y="237" width="220" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#1a1a1a;text-align:center;">Logo URL · brand color (4 swatches) · statement footer · live preview.</div></foreignObject>
+
+        <line x1="380" y1="90" x2="1110" y2="90" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="1110" y1="90" x2="1110" y2="220" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ahK)"/>
+        <text x="1240" y="215" font-size="11" font-weight="700">Save</text>
+        <rect x="1100" y="225" width="280" height="80" fill="#F26464" stroke="#1a1a1a" stroke-width="1.5"/>
+        <foreignObject x="1110" y="237" width="260" height="65"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:inherit;font-size:11px;color:#fff;text-align:center;">saveWhiteLabel() / saveFee() — writes through. Audit log captures the diff.</div></foreignObject>
+      </svg>
+    </div>
+    <div class="demo-note"><b>Demo tip:</b> Spend 20 seconds on each. The White-label preview is the only one with visible interactivity — change the brand color and the mock statement re-skins live.</div>
+  </section>
+
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "version": "2026-06-11",
+  "items": [
+    { "symbol": "SPX",  "name": "S&P 500",          "value": 5847.22, "change": 12.45,  "changePct": 0.21 },
+    { "symbol": "NDX",  "name": "Nasdaq 100",       "value": 20945.30, "change": 88.10, "changePct": 0.42 },
+    { "symbol": "DJI",  "name": "Dow Jones Ind.",   "value": 41822.51, "change": -54.20, "changePct": -0.13 },
+    { "symbol": "RUT",  "name": "Russell 2000",     "value": 2298.15, "change": 8.42, "changePct": 0.37 },
+    { "symbol": "VIX",  "name": "Volatility (VIX)", "value": 14.32, "change": -0.58, "changePct": -3.89 }
+  ]
+}

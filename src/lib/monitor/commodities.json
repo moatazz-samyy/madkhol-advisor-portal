@@ -1,0 +1,11 @@
+{
+  "version": "2026-06-11",
+  "items": [
+    { "symbol": "CL",    "name": "WTI Crude Oil",        "nameAr": "نفط خام أمريكي", "price": 78.45,  "changePct": 1.23,  "unit": "USD / bbl" },
+    { "symbol": "BRN",   "name": "Brent Crude Oil",      "nameAr": "نفط برنت",        "price": 82.10,  "changePct": 1.08,  "unit": "USD / bbl" },
+    { "symbol": "GC",    "name": "Gold",                  "nameAr": "ذهب",              "price": 2680.50,"changePct": -0.45, "unit": "USD / oz" },
+    { "symbol": "SI",    "name": "Silver",                "nameAr": "فضة",              "price": 32.40,  "changePct": -0.85, "unit": "USD / oz" },
+    { "symbol": "NG",    "name": "Natural Gas",           "nameAr": "غاز طبيعي",        "price": 2.95,   "changePct": 2.42,  "unit": "USD / MMBtu" },
+    { "symbol": "USDSAR","name": "USD / SAR",             "nameAr": "دولار / ريال",     "price": 3.7501, "changePct": 0.01,  "unit": "" }
+  ]
+}

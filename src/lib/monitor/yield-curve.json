@@ -1,0 +1,13 @@
+{
+  "version": "2026-06-11",
+  "items": [
+    { "tenor": "1M",  "yieldPct": 5.42, "dayChangeBps":  0.5 },
+    { "tenor": "3M",  "yieldPct": 5.38, "dayChangeBps": -0.2 },
+    { "tenor": "6M",  "yieldPct": 5.20, "dayChangeBps": -1.0 },
+    { "tenor": "1Y",  "yieldPct": 4.92, "dayChangeBps": -1.4 },
+    { "tenor": "2Y",  "yieldPct": 4.78, "dayChangeBps": -2.1 },
+    { "tenor": "5Y",  "yieldPct": 4.45, "dayChangeBps": -1.8 },
+    { "tenor": "10Y", "yieldPct": 4.42, "dayChangeBps": -1.2 },
+    { "tenor": "30Y", "yieldPct": 4.62, "dayChangeBps": -0.5 }
+  ]
+}

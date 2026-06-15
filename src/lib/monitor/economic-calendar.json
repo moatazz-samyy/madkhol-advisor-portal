@@ -1,0 +1,17 @@
+{
+  "version": "2026-06-11",
+  "items": [
+    { "date": "2026-06-12", "time": "08:30 ET", "event": "CPI YoY",                       "eventAr": "مؤشر أسعار المستهلك السنوي",   "consensus": "3.2%",   "prior": "3.4%",   "impact": "high" },
+    { "date": "2026-06-12", "time": "08:30 ET", "event": "Core CPI MoM",                  "eventAr": "مؤشر الأسعار الأساسي شهرياً", "consensus": "0.3%",   "prior": "0.3%",   "impact": "high" },
+    { "date": "2026-06-13", "time": "08:30 ET", "event": "PPI YoY",                       "eventAr": "أسعار المنتجين السنوية",       "consensus": "2.4%",   "prior": "2.5%",   "impact": "medium" },
+    { "date": "2026-06-14", "time": "14:00 ET", "event": "FOMC Rate Decision",            "eventAr": "قرار الفائدة الفيدرالي",       "consensus": "4.75%",  "prior": "4.75%",  "impact": "high" },
+    { "date": "2026-06-17", "time": "08:30 ET", "event": "Retail Sales MoM",              "eventAr": "مبيعات التجزئة شهرياً",        "consensus": "0.4%",   "prior": "0.1%",   "impact": "high" },
+    { "date": "2026-06-17", "time": "08:30 ET", "event": "Retail Sales ex-Auto",          "eventAr": "مبيعات التجزئة باستثناء السيارات", "consensus": "0.3%", "prior": "0.2%", "impact": "medium" },
+    { "date": "2026-06-19", "time": "08:30 ET", "event": "Initial Jobless Claims",        "eventAr": "طلبات إعانة البطالة",          "consensus": "238K",   "prior": "242K",   "impact": "medium" },
+    { "date": "2026-06-19", "time": "10:00 ET", "event": "Existing Home Sales",           "eventAr": "مبيعات المنازل القائمة",        "consensus": "4.10M",  "prior": "4.05M",  "impact": "medium" },
+    { "date": "2026-06-23", "time": "10:00 ET", "event": "S&P Global PMI Composite",      "eventAr": "مؤشر مديري المشتريات المركّب",  "consensus": "54.1",   "prior": "54.5",   "impact": "medium" },
+    { "date": "2026-06-25", "time": "08:30 ET", "event": "Durable Goods Orders MoM",      "eventAr": "طلبات السلع المعمّرة شهرياً",  "consensus": "0.5%",   "prior": "0.7%",   "impact": "medium" },
+    { "date": "2026-06-26", "time": "08:30 ET", "event": "GDP QoQ (Final)",               "eventAr": "الناتج المحلي ربع سنوي (نهائي)", "consensus": "1.6%", "prior": "1.6%",   "impact": "high" },
+    { "date": "2026-06-27", "time": "08:30 ET", "event": "Core PCE Price Index YoY",      "eventAr": "مؤشر أسعار النفقات الشخصية الأساسي", "consensus": "2.7%", "prior": "2.8%", "impact": "high" }
+  ]
+}

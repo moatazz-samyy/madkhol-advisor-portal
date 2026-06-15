@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madkhol Advisor Portal — Full Advisor Journey</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', 'Rubik', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: #FAFBFA;
+      color: #0A2E1F;
+    }
+    .page {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 24px 28px;
+      background: linear-gradient(135deg, #0C3D2E 0%, #156E47 60%, #2BBE7E 100%);
+      color: #fff;
+      border-radius: 18px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 24px -12px rgba(10,46,31,0.25);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    header p {
+      margin: 6px 0 0;
+      font-size: 13px;
+      color: #DCEFD0;
+      max-width: 520px;
+    }
+    header .meta {
+      text-align: right;
+      font-size: 12px;
+      color: #A8DDBA;
+      line-height: 1.6;
+    }
+    .diagram-card {
+      background: #fff;
+      border: 1px solid #E7ECE9;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(10,46,31,0.06);
+      overflow: auto;
+    }
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-width: 900px;
+    }
+    .walkthrough {
+      margin-top: 36px;
+      padding: 28px 32px;
+      background: #fff;
+      border: 1px solid #E7ECE9;
+      border-radius: 18px;
+      box-shadow: 0 1px 3px rgba(10,46,31,0.06);
+    }
+    .walkthrough h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: #0A2E1F;
+    }
+    .walkthrough p.lead {
+      margin: 0 0 20px;
+      color: #5E6964;
+      font-size: 13px;
+    }
+    .walkthrough ol {
+      margin: 0;
+      padding-left: 22px;
+      counter-reset: step;
+      list-style: none;
+    }
+    .walkthrough ol li {
+      counter-increment: step;
+      position: relative;
+      padding: 12px 0 12px 44px;
+      border-bottom: 1px solid #EEF2F0;
+      font-size: 13px;
+      color: #3D4843;
+      line-height: 1.55;
+    }
+    .walkthrough ol li:last-child { border-bottom: none; }
+    .walkthrough ol li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #DCEFD0;
+      color: #0C3D2E;
+      font-weight: 700;
+      font-size: 12px;
+      display: grid;
+      place-items: center;
+    }
+    .walkthrough ol li b {
+      color: #0A2E1F;
+      font-weight: 600;
+    }
+    footer {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 11px;
+      color: #8A968F;
+    }
+    @media print {
+      body { background: #fff; }
+      header { box-shadow: none; }
+      .diagram-card { box-shadow: none; border: none; }
+      .walkthrough { box-shadow: none; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <h1>Madkhol Advisor Portal — Full Advisor Journey</h1>
+        <p>Every advisor-facing surface, in the order an advisor would use them. From sign-in through every module to logout.</p>
+      </div>
+      <div class="meta">
+        Demo build · v1<br>
+        10 advisors · 20 clients · 50 funds<br>
+        Bilingual AR/EN · RTL-aware
+      </div>
+    </header>
+
+    <div class="diagram-card">
+      <svg viewBox="0 0 1500 2200" xmlns="http://www.w3.org/2000/svg" role="img" font-family="ui-sans-serif, system-ui, sans-serif">
+        <title>Madkhol Advisor Portal — full advisor journey flowchart</title>
+        <desc>End-to-end advisor flow: sign-in to dashboard, then every feature module including clients, assets, trading, Madkhol AI, Alpaca, projections, Saudi differentiators, marketplace, and operations. Ends at logout.</desc>
+
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#5E6964"/>
+          </marker>
+          <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#1F8A5A"/>
+          </marker>
+        </defs>
+
+        <rect width="1500" height="2200" fill="#FAFBFA"/>
+
+        <text x="750" y="50" text-anchor="middle" font-size="22" font-weight="700" fill="#0A2E1F">Advisor Journey · End-to-End</text>
+        <text x="750" y="75" text-anchor="middle" font-size="13" fill="#5E6964">Every advisor-facing surface, in the order an advisor would use them</text>
+
+        <g>
+          <rect x="600" y="110" width="300" height="60" rx="14" fill="#0A2E1F"/>
+          <text x="750" y="138" text-anchor="middle" font-size="15" font-weight="600" fill="#FFFFFF">1. Sign in</text>
+          <text x="750" y="156" text-anchor="middle" font-size="11" fill="#A8DDBA">advisor@madkhol.com · demo123</text>
+        </g>
+
+        <line x1="750" y1="170" x2="750" y2="200" stroke="#5E6964" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <g>
+          <rect x="500" y="205" width="500" height="80" rx="16" fill="#0C3D2E"/>
+          <text x="750" y="232" text-anchor="middle" font-size="16" font-weight="700" fill="#FFFFFF">2. Dashboard (hub)</text>
+          <text x="750" y="252" text-anchor="middle" font-size="11" fill="#6BE07F">4 stat cards · Shariah alerts · Top clients · Activity feed</text>
+          <text x="750" y="269" text-anchor="middle" font-size="11" fill="#A8DDBA">Madkhol AI banner · Alpaca banner · Hijri/Gregorian date</text>
+        </g>
+
+        <line x1="750" y1="285" x2="750" y2="320" stroke="#5E6964" stroke-width="2"/>
+        <line x1="170" y1="320" x2="1330" y2="320" stroke="#5E6964" stroke-width="2"/>
+
+        <text x="170" y="355" font-size="13" font-weight="700" fill="#0A2E1F">A · CLIENT &amp; ASSET OPS</text>
+        <text x="750" y="355" font-size="13" font-weight="700" fill="#0A2E1F" text-anchor="middle">B · TRADING &amp; STRATEGY</text>
+        <text x="1330" y="355" font-size="13" font-weight="700" fill="#0A2E1F" text-anchor="end">C · AI · SAUDI · OPERATIONS</text>
+
+        <line x1="170" y1="320" x2="170" y2="370" stroke="#5E6964" stroke-width="2" marker-end="url(#arrow)"/>
+        <line x1="750" y1="320" x2="750" y2="370" stroke="#5E6964" stroke-width="2" marker-end="url(#arrow)"/>
+        <line x1="1330" y1="320" x2="1330" y2="370" stroke="#5E6964" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <g>
+          <rect x="60" y="385" width="380" height="32" rx="8" fill="#1F8A5A"/>
+          <text x="250" y="406" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Clients</text>
+        </g>
+        <line x1="250" y1="417" x2="250" y2="437" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="60" y="440" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="250" y="460" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Clients list</text>
+          <text x="250" y="476" text-anchor="middle" font-size="10" fill="#5E6964">Filter by status / Shariah / new · status badges</text>
+        </g>
+        <line x1="250" y1="484" x2="250" y2="504" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="60" y="507" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="250" y="527" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Client detail · 5 tabs</text>
+          <text x="250" y="543" text-anchor="middle" font-size="10" fill="#5E6964">Portfolio · Performance · Activity · Docs · Notes</text>
+        </g>
+
+        <g>
+          <rect x="60" y="585" width="380" height="32" rx="8" fill="#1F8A5A"/>
+          <text x="250" y="606" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Universal Asset Search</text>
+        </g>
+        <line x1="250" y1="617" x2="250" y2="637" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="60" y="640" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="250" y="660" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Search + filter sidebar</text>
+          <text x="250" y="676" text-anchor="middle" font-size="10" fill="#5E6964">Purification / sh. · Min 1 share rule banner</text>
+        </g>
+        <line x1="250" y1="684" x2="250" y2="704" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="60" y="707" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="250" y="727" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Asset detail drawer</text>
+          <text x="250" y="743" text-anchor="middle" font-size="10" fill="#5E6964">90d chart · fundamentals · Shariah reasoning</text>
+        </g>
+        <line x1="250" y1="751" x2="250" y2="771" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="60" y="774" width="380" height="44" rx="10" fill="#DCEFD0" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="250" y="794" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Select → Add to Model / Client / Optimizer</text>
+          <text x="250" y="810" text-anchor="middle" font-size="10" fill="#3D4843">Sticky selection bar with 3 CTAs</text>
+        </g>
+
+        <g>
+          <rect x="60" y="855" width="380" height="32" rx="8" fill="#1F8A5A"/>
+          <text x="250" y="876" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Sector Heatmap</text>
+        </g>
+        <line x1="250" y1="887" x2="250" y2="907" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="60" y="910" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="250" y="930" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">11-sector grid · color by % move</text>
+          <text x="250" y="946" text-anchor="middle" font-size="10" fill="#5E6964">Persistent client picker (?client=…)</text>
+        </g>
+        <line x1="250" y1="954" x2="250" y2="974" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="60" y="977" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="250" y="997" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Sector detail · 3 tabs</text>
+          <text x="250" y="1013" text-anchor="middle" font-size="10" fill="#5E6964">Movers · Gainers · All — multi-select</text>
+        </g>
+        <line x1="250" y1="1021" x2="250" y2="1041" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="60" y="1044" width="380" height="44" rx="10" fill="#DCEFD0" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="250" y="1064" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Basket bar → Buy for client</text>
+          <text x="250" y="1080" text-anchor="middle" font-size="10" fill="#3D4843">Server action persists transactions</text>
+        </g>
+
+        <g>
+          <rect x="560" y="385" width="380" height="32" rx="8" fill="#1F8A5A"/>
+          <text x="750" y="406" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Allocation Order</text>
+        </g>
+        <line x1="750" y1="417" x2="750" y2="437" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="560" y="440" width="380" height="60" rx="10" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="750" y="460" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">6-step wizard</text>
+          <text x="750" y="478" text-anchor="middle" font-size="10" fill="#5E6964">Funds → Clients → Method → Amount</text>
+          <text x="750" y="492" text-anchor="middle" font-size="10" fill="#5E6964">→ Preview → Confirm (server action)</text>
+        </g>
+
+        <g>
+          <rect x="560" y="525" width="380" height="32" rx="8" fill="#1F8A5A"/>
+          <text x="750" y="546" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Rebalance</text>
+        </g>
+        <line x1="750" y1="557" x2="750" y2="577" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="560" y="580" width="380" height="60" rx="10" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="750" y="600" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">4-step wizard</text>
+          <text x="750" y="618" text-anchor="middle" font-size="10" fill="#5E6964">Pick portfolios → Drift threshold</text>
+          <text x="750" y="632" text-anchor="middle" font-size="10" fill="#5E6964">→ Review trades → Execute</text>
+        </g>
+
+        <g>
+          <rect x="560" y="665" width="380" height="32" rx="8" fill="#1F8A5A"/>
+          <text x="750" y="686" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Model Portfolios</text>
+        </g>
+        <line x1="750" y1="697" x2="750" y2="717" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="560" y="720" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="750" y="740" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">List → Create / Edit</text>
+          <text x="750" y="756" text-anchor="middle" font-size="10" fill="#5E6964">Name (AR/EN) · target holdings · description</text>
+        </g>
+        <line x1="750" y1="764" x2="750" y2="784" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="560" y="787" width="380" height="44" rx="10" fill="#DCEFD0" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="750" y="807" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Apply model to clients</text>
+          <text x="750" y="823" text-anchor="middle" font-size="10" fill="#3D4843">Picker modal → batch assignment</text>
+        </g>
+
+        <g>
+          <rect x="560" y="855" width="380" height="32" rx="8" fill="#1F8A5A"/>
+          <text x="750" y="876" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Portfolio Optimizer</text>
+        </g>
+        <line x1="750" y1="887" x2="750" y2="907" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="560" y="910" width="380" height="60" rx="10" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="750" y="930" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Config panel + 4 methods</text>
+          <text x="750" y="948" text-anchor="middle" font-size="10" fill="#5E6964">Mean-Variance · Risk Parity</text>
+          <text x="750" y="962" text-anchor="middle" font-size="10" fill="#5E6964">Equal-Weight · Black-Litterman</text>
+        </g>
+        <line x1="750" y1="970" x2="750" y2="990" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="560" y="993" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="750" y="1013" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Constraints + manual tweak</text>
+          <text x="750" y="1029" text-anchor="middle" font-size="10" fill="#5E6964">Sector caps · per-asset bounds · 99% budget</text>
+        </g>
+        <line x1="750" y1="1037" x2="750" y2="1057" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="560" y="1060" width="380" height="44" rx="10" fill="#DCEFD0" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="750" y="1080" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Apply weights → Model / Client</text>
+          <text x="750" y="1096" text-anchor="middle" font-size="10" fill="#3D4843">Results panel: return · vol · Sharpe · weights chart</text>
+        </g>
+
+        <g>
+          <rect x="560" y="1135" width="380" height="32" rx="8" fill="#1F8A5A"/>
+          <text x="750" y="1156" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Performance Projections</text>
+        </g>
+        <line x1="750" y1="1167" x2="750" y2="1187" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="560" y="1190" width="380" height="60" rx="10" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="750" y="1210" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Pick subject + scenario</text>
+          <text x="750" y="1228" text-anchor="middle" font-size="10" fill="#5E6964">Client portfolio · Model · Alpaca model</text>
+          <text x="750" y="1242" text-anchor="middle" font-size="10" fill="#5E6964">Horizon · contribution · withdrawal · CI</text>
+        </g>
+        <line x1="750" y1="1250" x2="750" y2="1270" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="560" y="1273" width="380" height="44" rx="10" fill="#DCEFD0" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="750" y="1293" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Monte Carlo run → fan chart</text>
+          <text x="750" y="1309" text-anchor="middle" font-size="10" fill="#3D4843">10k paths · cached · p5/p25/p50/p75/p95</text>
+        </g>
+
+        <g>
+          <rect x="1060" y="385" width="380" height="32" rx="8" fill="#0C3D2E"/>
+          <text x="1250" y="406" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Madkhol AI Trading</text>
+        </g>
+        <line x1="1250" y1="417" x2="1250" y2="437" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="440" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="460" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Landing page</text>
+          <text x="1250" y="476" text-anchor="middle" font-size="10" fill="#5E6964">Min 10K SAR chip · perf chart · FAQ</text>
+        </g>
+        <line x1="1250" y1="484" x2="1250" y2="504" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="507" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="527" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Connect modal · 3 steps</text>
+          <text x="1250" y="543" text-anchor="middle" font-size="10" fill="#5E6964">Terms → Engagement level → Review</text>
+        </g>
+        <line x1="1250" y1="551" x2="1250" y2="571" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="574" width="380" height="44" rx="10" fill="#DCEFD0" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="594" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Suggestions inbox</text>
+          <text x="1250" y="610" text-anchor="middle" font-size="10" fill="#3D4843">Approve / Reject AI trade ideas</text>
+        </g>
+
+        <g>
+          <rect x="1060" y="645" width="380" height="32" rx="8" fill="#0C3D2E"/>
+          <text x="1250" y="666" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Alpaca Model Portfolios</text>
+        </g>
+        <line x1="1250" y1="677" x2="1250" y2="697" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="700" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="720" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">List · Create · Link clients</text>
+          <text x="1250" y="736" text-anchor="middle" font-size="10" fill="#5E6964">Per-client tweaks editor (overrides)</text>
+        </g>
+        <line x1="1250" y1="744" x2="1250" y2="764" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="767" width="380" height="44" rx="10" fill="#DCEFD0" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="787" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Sync review → Approve per client</text>
+          <text x="1250" y="803" text-anchor="middle" font-size="10" fill="#3D4843">Computed trades + cash delta + warnings</text>
+        </g>
+
+        <g>
+          <rect x="1060" y="835" width="380" height="32" rx="8" fill="#0C3D2E"/>
+          <text x="1250" y="856" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Saudi-native Differentiators</text>
+        </g>
+        <line x1="1250" y1="867" x2="1250" y2="887" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="890" width="380" height="32" rx="8" fill="#FFFFFF" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="911" text-anchor="middle" font-size="12" fill="#0A2E1F"><tspan font-weight="600">Shariah Dashboard</tspan> · alerts + drift</text>
+        </g>
+        <line x1="1250" y1="922" x2="1250" y2="936" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="939" width="380" height="32" rx="8" fill="#FFFFFF" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="960" text-anchor="middle" font-size="12" fill="#0A2E1F"><tspan font-weight="600">Zakat</tspan> · calc + per-client report</text>
+        </g>
+        <line x1="1250" y1="971" x2="1250" y2="985" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="988" width="380" height="32" rx="8" fill="#FFFFFF" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="1009" text-anchor="middle" font-size="12" fill="#0A2E1F"><tspan font-weight="600">Mirath</tspan> · inheritance shares + donut</text>
+        </g>
+        <line x1="1250" y1="1020" x2="1250" y2="1034" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="1037" width="380" height="32" rx="8" fill="#FFFFFF" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="1058" text-anchor="middle" font-size="12" fill="#0A2E1F"><tspan font-weight="600">GOSI</tspan> · gap planner + bridge chart</text>
+        </g>
+        <line x1="1250" y1="1069" x2="1250" y2="1083" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="1086" width="380" height="32" rx="8" fill="#FFFFFF" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="1107" text-anchor="middle" font-size="12" fill="#0A2E1F"><tspan font-weight="600">Messages</tspan> · WhatsApp mock thread</text>
+        </g>
+
+        <g>
+          <rect x="1060" y="1140" width="380" height="32" rx="8" fill="#0C3D2E"/>
+          <text x="1250" y="1161" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Certified Advisor Marketplace</text>
+        </g>
+        <line x1="1250" y1="1172" x2="1250" y2="1192" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="1195" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="1215" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Inquiries inbox (advisor side)</text>
+          <text x="1250" y="1231" text-anchor="middle" font-size="10" fill="#5E6964">Thread view · Accept / Decline / Schedule</text>
+        </g>
+        <line x1="1250" y1="1239" x2="1250" y2="1259" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="1262" width="380" height="44" rx="10" fill="#FFFFFF" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="1282" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Profile editor + visibility toggle</text>
+          <text x="1250" y="1298" text-anchor="middle" font-size="10" fill="#5E6964">Bio · philosophy · fee · specializations · photo</text>
+        </g>
+        <line x1="1250" y1="1306" x2="1250" y2="1326" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="1329" width="380" height="44" rx="10" fill="#DCEFD0" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="1250" y="1349" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Preview public profile (consumer)</text>
+          <text x="1250" y="1365" text-anchor="middle" font-size="10" fill="#3D4843">Opens /consumer/advisor/&lt;id&gt; in new tab</text>
+        </g>
+
+        <g>
+          <rect x="1060" y="1400" width="380" height="32" rx="8" fill="#3D4843"/>
+          <text x="1250" y="1421" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Operational (4 surfaces)</text>
+        </g>
+        <line x1="1250" y1="1432" x2="1250" y2="1452" stroke="#5E6964" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="1060" y="1455" width="186" height="56" rx="10" fill="#FFFFFF" stroke="#D9E0DD" stroke-width="1.5"/>
+          <text x="1153" y="1475" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Audit Log</text>
+          <text x="1153" y="1492" text-anchor="middle" font-size="10" fill="#5E6964">Filters +</text>
+          <text x="1153" y="1505" text-anchor="middle" font-size="10" fill="#5E6964">detail drawer</text>
+          <rect x="1254" y="1455" width="186" height="56" rx="10" fill="#FFFFFF" stroke="#D9E0DD" stroke-width="1.5"/>
+          <text x="1347" y="1475" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Reporting</text>
+          <text x="1347" y="1492" text-anchor="middle" font-size="10" fill="#5E6964">Builder +</text>
+          <text x="1347" y="1505" text-anchor="middle" font-size="10" fill="#5E6964">mock PDF</text>
+          <rect x="1060" y="1519" width="186" height="56" rx="10" fill="#FFFFFF" stroke="#D9E0DD" stroke-width="1.5"/>
+          <text x="1153" y="1539" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">Billing</text>
+          <text x="1153" y="1556" text-anchor="middle" font-size="10" fill="#5E6964">Fee + invoices</text>
+          <text x="1153" y="1569" text-anchor="middle" font-size="10" fill="#5E6964">per client</text>
+          <rect x="1254" y="1519" width="186" height="56" rx="10" fill="#FFFFFF" stroke="#D9E0DD" stroke-width="1.5"/>
+          <text x="1347" y="1539" text-anchor="middle" font-size="12" font-weight="600" fill="#0A2E1F">White-label</text>
+          <text x="1347" y="1556" text-anchor="middle" font-size="10" fill="#5E6964">Logo + color</text>
+          <text x="1347" y="1569" text-anchor="middle" font-size="10" fill="#5E6964">live preview</text>
+        </g>
+
+        <g>
+          <rect x="60" y="1620" width="1380" height="120" rx="14" fill="#F5F2E8" stroke="#DCEFD0" stroke-width="1.5"/>
+          <text x="750" y="1650" text-anchor="middle" font-size="14" font-weight="700" fill="#0A2E1F">Cross-module shortcuts an advisor lives in</text>
+          <text x="750" y="1675" text-anchor="middle" font-size="11" fill="#3D4843">Asset Search selection → Optimizer · Client detail Alpaca-link section → Sync review · Models page → Apply to clients</text>
+          <text x="750" y="1695" text-anchor="middle" font-size="11" fill="#3D4843">Sectors basket → Buy server action → reflected in Client detail Activity tab · Shariah alert → Client detail · Zakat report → Per-client PDF</text>
+          <text x="750" y="1715" text-anchor="middle" font-size="11" fill="#3D4843">Marketplace inquiry → Profile editor response · Madkhol AI suggestion → linked client/model · Top-bar locale toggle persists across surfaces</text>
+        </g>
+
+        <g>
+          <rect x="60" y="1770" width="1380" height="80" rx="14" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="750" y="1798" text-anchor="middle" font-size="14" font-weight="700" fill="#0A2E1F">Persistent app shell (always visible)</text>
+          <text x="750" y="1820" text-anchor="middle" font-size="11" fill="#5E6964">Sidebar nav (20+ entries) · Top bar: logo · AR/EN toggle · Hijri/Gregorian date · user menu · brand color from White-label</text>
+          <text x="750" y="1838" text-anchor="middle" font-size="11" fill="#5E6964">Numeric values use tabular-nums · RTL flips layout, never just text · Tajawal (AR) + Rubik (EN) per-glyph</text>
+        </g>
+
+        <line x1="750" y1="1875" x2="750" y2="1905" stroke="#1F8A5A" stroke-width="2" marker-end="url(#arrowGreen)"/>
+        <g>
+          <rect x="600" y="1910" width="300" height="56" rx="14" fill="#0A2E1F"/>
+          <text x="750" y="1937" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">Logout</text>
+          <text x="750" y="1954" text-anchor="middle" font-size="10" fill="#A8DDBA">User menu → Sign out → back to Login</text>
+        </g>
+
+        <path d="M 600 1938 Q 100 1938 100 130 Q 100 140 595 140" stroke="#1F8A5A" stroke-width="1.5" stroke-dasharray="5,4" fill="none" marker-end="url(#arrowGreen)"/>
+        <text x="80" y="1050" font-size="10" fill="#1F8A5A" transform="rotate(-90 80 1050)">session ends → next login</text>
+
+        <g>
+          <rect x="60" y="2000" width="1380" height="100" rx="12" fill="#FFFFFF" stroke="#E7ECE9" stroke-width="1.5"/>
+          <text x="80" y="2025" font-size="13" font-weight="700" fill="#0A2E1F">Legend</text>
+
+          <rect x="80" y="2040" width="20" height="14" rx="4" fill="#0C3D2E"/>
+          <text x="108" y="2052" font-size="11" fill="#3D4843">Section hub</text>
+
+          <rect x="220" y="2040" width="20" height="14" rx="4" fill="#1F8A5A"/>
+          <text x="248" y="2052" font-size="11" fill="#3D4843">Feature group</text>
+
+          <rect x="360" y="2040" width="20" height="14" rx="4" fill="#FFFFFF" stroke="#D6EFDD" stroke-width="1.5"/>
+          <text x="388" y="2052" font-size="11" fill="#3D4843">Screen / step</text>
+
+          <rect x="500" y="2040" width="20" height="14" rx="4" fill="#DCEFD0" stroke="#A8DDBA" stroke-width="1.5"/>
+          <text x="528" y="2052" font-size="11" fill="#3D4843">Action / server commit</text>
+
+          <rect x="720" y="2040" width="20" height="14" rx="4" fill="#3D4843"/>
+          <text x="748" y="2052" font-size="11" fill="#3D4843">Operational</text>
+
+          <line x1="900" y1="2047" x2="940" y2="2047" stroke="#5E6964" stroke-width="2" marker-end="url(#arrow)"/>
+          <text x="950" y="2052" font-size="11" fill="#3D4843">Linear next step</text>
+
+          <line x1="1090" y1="2047" x2="1130" y2="2047" stroke="#1F8A5A" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrowGreen)"/>
+          <text x="1140" y="2052" font-size="11" fill="#3D4843">Session loop</text>
+
+          <text x="80" y="2080" font-size="11" fill="#5E6964">Lanes A/B/C are organizational — an advisor crosses lanes constantly (e.g. Asset Search → Optimizer → Apply to Client).</text>
+        </g>
+      </svg>
+    </div>
+
+    <section class="walkthrough">
+      <h2>Recommended CEO walkthrough order</h2>
+      <p class="lead">10–12 minutes. Hits every box in the diagram exactly once, in a sequence that tells a coherent story: discover assets → decide allocation → apply to clients → handle Saudi-specific obligations → grow the practice.</p>
+      <ol>
+        <li><b>Login → Dashboard.</b> Show the four stat cards, Shariah alerts strip, top clients, activity feed, AI/Alpaca banners.</li>
+        <li><b>Clients list → open one client → walk all 5 tabs.</b> Portfolio, Performance, Activity, Documents, Notes.</li>
+        <li><b>Asset Search.</b> Type "AAPL". Point at the Purification / sh. column and the Min 1 share rule banner. Open the drawer.</li>
+        <li><b>Select 3 assets → Optimizer.</b> Run Mean-Variance, then Risk Parity, show how the weights shift.</li>
+        <li><b>Apply weights to a Client (or to a Model).</b> One click commits via server action.</li>
+        <li><b>Sectors heatmap → drill into Tech → basket buy</b> for the same client. Open the Client detail Activity tab; the new trades appear.</li>
+        <li><b>Performance Projections.</b> Run a 10-year Monte Carlo on that client's portfolio. Show the fan chart.</li>
+        <li><b>Madkhol AI.</b> Landing page — call out the 10K SAR / client minimum chip. Open the Connect modal, walk to step 2, close. Show the Suggestions inbox.</li>
+        <li><b>Saudi differentiators</b>, 30 seconds each: Shariah Dashboard → Zakat → Mirath → GOSI → Messages.</li>
+        <li><b>Consumer Marketplace</b>, new tab: <code>/consumer/marketplace</code>. Show the 10 advisor cards with the real Saudi portraits.</li>
+        <li><b>Back to the app — Inquiries inbox → Profile editor.</b> The matching advisor-side surface.</li>
+        <li><b>Operational</b>, fast click-through: Audit Log → Reporting → Billing → White-label.</li>
+        <li><b>Logout.</b> Back to Login screen — close the loop.</li>
+      </ol>
+    </section>
+
+    <footer>
+      Madkhol Advisor Portal · demo build · open this file directly in a browser, or print to PDF for the deck.
+    </footer>
+  </div>
+</body>
+</html>

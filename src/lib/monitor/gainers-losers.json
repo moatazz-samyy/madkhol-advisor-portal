@@ -1,0 +1,17 @@
+{
+  "version": "2026-06-11",
+  "gainers": [
+    { "symbol": "PLTR", "name": "Palantir Technologies",   "price": 78.20,  "changePct": 5.42 },
+    { "symbol": "MU",   "name": "Micron Technology",       "price": 122.45, "changePct": 4.18 },
+    { "symbol": "SHOP", "name": "Shopify",                 "price": 95.80,  "changePct": 3.88 },
+    { "symbol": "CRWD", "name": "CrowdStrike",             "price": 348.20, "changePct": 3.55 },
+    { "symbol": "ABNB", "name": "Airbnb",                  "price": 142.30, "changePct": 3.12 }
+  ],
+  "losers": [
+    { "symbol": "BA",   "name": "Boeing",                  "price": 158.30, "changePct": -4.85 },
+    { "symbol": "INTC", "name": "Intel",                   "price": 19.45,  "changePct": -3.92 },
+    { "symbol": "FDX",  "name": "FedEx",                   "price": 245.80, "changePct": -3.45 },
+    { "symbol": "WMT",  "name": "Walmart",                 "price": 92.10,  "changePct": -2.78 },
+    { "symbol": "DIS",  "name": "Walt Disney",             "price": 108.55, "changePct": -2.42 }
+  ]
+}

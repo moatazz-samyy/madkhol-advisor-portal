@@ -1,0 +1,15 @@
+{
+  "version": "2026-06-11",
+  "items": [
+    { "symbol": "NVDA",  "name": "NVIDIA",           "price": 950.10, "changePct": -0.32, "volumeShares": 145300000 },
+    { "symbol": "TSLA",  "name": "Tesla",            "price": 248.65, "changePct": 1.85,  "volumeShares": 132400000 },
+    { "symbol": "AAPL",  "name": "Apple",            "price": 232.45, "changePct": 0.42,  "volumeShares": 88500000 },
+    { "symbol": "AMZN",  "name": "Amazon",           "price": 188.20, "changePct": 0.78,  "volumeShares": 75600000 },
+    { "symbol": "MSFT",  "name": "Microsoft",        "price": 445.32, "changePct": -0.18, "volumeShares": 62100000 },
+    { "symbol": "AMD",   "name": "AMD",              "price": 154.80, "changePct": -1.12, "volumeShares": 58900000 },
+    { "symbol": "META",  "name": "Meta",             "price": 575.40, "changePct": 0.65,  "volumeShares": 42300000 },
+    { "symbol": "GOOGL", "name": "Alphabet",         "price": 198.75, "changePct": 0.95,  "volumeShares": 39800000 },
+    { "symbol": "PLTR",  "name": "Palantir",         "price": 78.20,  "changePct": 3.45,  "volumeShares": 38400000 },
+    { "symbol": "AVGO",  "name": "Broadcom",         "price": 1820.50, "changePct": 1.22,  "volumeShares": 28700000 }
+  ]
+}

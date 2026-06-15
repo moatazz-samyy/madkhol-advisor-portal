@@ -1,0 +1,386 @@
+// Madkhol Advisor Portal — production schema
+// Prisma + Postgres (Neon for managed hosting on Vercel).
+// JSON values are stored as String and parsed by app code so the schema works
+// on every provider without per-provider migrations.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// -------- Tenancy --------
+
+model Advisor {
+  id                        String    @id @default(cuid())
+  name                      String
+  nameAr                    String
+  email                     String    @unique
+  passwordHash              String
+  logoUrl                   String?
+  brandColor                String    @default("#0A2E1F")
+  licenseNo                 String
+  createdAt                 DateTime  @default(now())
+  // Madkhol AI Trading integration — see /madkhol-ai
+  madkholAiConnectedAt      DateTime?
+  madkholAiEngagementLevel  String?   // "suggestions_only" | "auto_execute_below_10k"
+  // Per-advisor UI preferences (column visibility, default filters, etc.)
+  // JSON shape: { search: { columns: ColumnKey[], filters: PartialSearchFilters } }
+  preferences               String    @default("{}")
+
+  clients          Client[]
+  modelPortfolios  ModelPortfolio[]
+  allocationOrders AllocationOrder[]
+  rebalanceJobs    RebalanceJob[]
+  shariahAlerts    ShariahAlert[]
+  auditLogs        AuditLog[]
+  advisorProfile   AdvisorProfile?
+  watchlists       Watchlist[]
+  assetNotes       AssetNote[]
+  assetAlerts      AssetAlert[]
+}
+
+// -------- Technical-advisor features: Watchlists, Notes, Alerts --------
+
+model Watchlist {
+  id        String          @id @default(cuid())
+  advisorId String
+  name      String
+  nameAr    String?
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  advisor Advisor          @relation(fields: [advisorId], references: [id], onDelete: Cascade)
+  items   WatchlistItem[]
+
+  @@index([advisorId])
+}
+
+model WatchlistItem {
+  id          String   @id @default(cuid())
+  watchlistId String
+  // Universal-search symbol — NOT a Fund.id (which only exists once an asset is bought)
+  symbol      String
+  addedAt     DateTime @default(now())
+
+  watchlist Watchlist @relation(fields: [watchlistId], references: [id], onDelete: Cascade)
+
+  @@unique([watchlistId, symbol])
+  @@index([watchlistId])
+}
+
+model AssetNote {
+  id        String   @id @default(cuid())
+  advisorId String
+  symbol    String   // Universal-search symbol
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  advisor Advisor @relation(fields: [advisorId], references: [id], onDelete: Cascade)
+
+  @@unique([advisorId, symbol])
+  @@index([advisorId])
+}
+
+model AssetAlert {
+  id          String    @id @default(cuid())
+  advisorId   String
+  symbol      String    // Universal-search symbol
+  // What to watch — see lib/alerts/types.ts for the enum
+  metric      String    // "priceDailyChangePct" | "ytdReturn" | "dividendYield" | "peRatio" | "lastPrice"
+  // Direction + threshold — e.g. metric:lastPrice, op:"lte", value:220 → "alert when AAPL ≤ $220"
+  op          String    // "lte" | "gte"
+  threshold   Float
+  active      Boolean   @default(true)
+  // Last evaluation — null until first check; lastTriggeredAt only fires once per
+  // crossing so the dashboard doesn't keep blinking after the condition's met.
+  lastCheckedAt    DateTime?
+  lastTriggeredAt  DateTime?
+  createdAt        DateTime @default(now())
+
+  advisor Advisor @relation(fields: [advisorId], references: [id], onDelete: Cascade)
+
+  @@index([advisorId])
+  @@index([advisorId, active])
+}
+
+// -------- Certified Advisor Marketplace (consumer-facing + advisor-side) --------
+
+model AdvisorProfile {
+  id                  String   @id @default(cuid())
+  advisorId           String   @unique
+  bio                 String
+  bioAr               String
+  philosophy          String
+  philosophyAr        String
+  yearsExperience     Int
+  photoUrl            String?
+  // JSON arrays of keys (see src/lib/marketplace/types.ts for the canonical list)
+  specializations     String   @default("[]")
+  languages           String   @default("[]")
+  feeStructure        String   // "1% AuM/yr" — human-readable
+  feeBps              Int      @default(100) // numeric for filtering
+  averageClientAumSar Float    @default(0)
+  currentClientCount  Int      @default(0)
+  totalAumSar         Float    @default(0)
+  visible             Boolean  @default(true)
+  // Vetting happens out of band per spec — only "certified" rows surface on the consumer marketplace.
+  certificationStatus String   @default("pending") // pending | certified | suspended
+  certifiedAt         DateTime?
+  // Internal-only metrics (NOT exposed on consumer surfaces — Saudi defamation law concerns)
+  internalRating      Float?   @default(0) // 0-5, advisor-team internal only
+  internalNotes       String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  advisor   Advisor              @relation(fields: [advisorId], references: [id], onDelete: Cascade)
+  inquiries MarketplaceInquiry[]
+
+  @@index([certificationStatus, visible])
+}
+
+model MarketplaceInquiry {
+  id               String   @id @default(cuid())
+  advisorProfileId String
+  advisorId        String   // denormalized so advisor-side queries can skip the join
+  userName         String   // partially masked in UI (privacy)
+  userEmail        String
+  selectedTier     String   // full_discretionary | advice_only | hybrid
+  topic            String
+  status           String   @default("new") // new | replied | booked | closed
+  // JSON array of { from: "user" | "advisor", body, at }
+  messages         String   @default("[]")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  advisorProfile AdvisorProfile @relation(fields: [advisorProfileId], references: [id], onDelete: Cascade)
+
+  @@index([advisorId, status])
+  @@index([advisorProfileId])
+}
+
+// -------- Clients --------
+
+model Client {
+  id                String   @id @default(cuid())
+  advisorId         String
+  name              String
+  nameAr            String
+  nationalId        String
+  phone             String
+  email             String
+  status            String   @default("active") // active | pending_nafath | inactive
+  joinedAt          DateTime @default(now())
+  suitabilityScore  Int      @default(50)
+  hijriYearEndDate  DateTime
+  familyStructure   String   @default("{}")
+  expectedRetireAge Int      @default(60)
+  monthlyExpenseSar Int      @default(15000)
+  // Shareable KYC invite — advisor copies/sends this link, client opens it
+  // unauthenticated to complete identity verification. Token cleared on submit.
+  kycToken          String?  @unique
+  kycCompletedAt    DateTime?
+
+  advisor      Advisor       @relation(fields: [advisorId], references: [id], onDelete: Cascade)
+  portfolio    Portfolio?
+  zakatReports ZakatReport[]
+  notes        ClientNote[]
+
+  @@index([advisorId])
+}
+
+model ClientNote {
+  id        String   @id @default(cuid())
+  clientId  String
+  body      String
+  createdAt DateTime @default(now())
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId])
+}
+
+// -------- Portfolios + Holdings + Funds --------
+
+model Portfolio {
+  id               String    @id @default(cuid())
+  clientId         String    @unique
+  currency         String    @default("SAR")
+  totalAumSar      Float     @default(0)
+  lastRebalancedAt DateTime?
+  targetModelId    String?
+
+  client       Client          @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  targetModel  ModelPortfolio? @relation(fields: [targetModelId], references: [id])
+  holdings     Holding[]
+  transactions Transaction[]
+}
+
+model Fund {
+  id                  String  @id @default(cuid())
+  symbol              String? @unique // e.g. "AAPL" for assets sourced via universal search; null for SAR-fund universe
+  nameEn              String
+  nameAr              String
+  assetClass          String
+  region              String
+  sector              String? // GICS sector for universal-search assets
+  currency            String  @default("SAR")
+  fundManager         String
+  marketCapSar        Float?  // for universal-search filtering
+  shariahCompliant    Boolean @default(true)
+  shariahStatusReason String?
+  lastKnownNav        Float
+  ytdReturn           Float   @default(0)
+  fundFeeBps          Int     @default(75)
+
+  holdings     Holding[]
+  transactions Transaction[]
+}
+
+model Holding {
+  id           String @id @default(cuid())
+  portfolioId  String
+  fundId       String
+  units        Float
+  averageCost  Float
+  currentValue Float
+
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  fund      Fund      @relation(fields: [fundId], references: [id])
+
+  @@index([portfolioId])
+  @@index([fundId])
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  portfolioId String
+  fundId      String
+  type        String
+  units       Float
+  amountSar   Float
+  executedAt  DateTime
+  source      String?
+
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  fund      Fund      @relation(fields: [fundId], references: [id])
+
+  @@index([portfolioId, executedAt])
+}
+
+// -------- Models / Orders / Jobs --------
+
+model ModelPortfolio {
+  id             String @id @default(cuid())
+  advisorId      String
+  name           String
+  nameAr         String
+  description    String
+  targetHoldings String
+
+  advisor    Advisor     @relation(fields: [advisorId], references: [id], onDelete: Cascade)
+  portfolios Portfolio[]
+
+  @@index([advisorId])
+}
+
+model AllocationOrder {
+  id                 String   @id @default(cuid())
+  advisorId          String
+  fundId             String
+  algorithm          String
+  totalAmountSar     Float
+  executedAt         DateTime @default(now())
+  perClientBreakdown String
+
+  advisor Advisor @relation(fields: [advisorId], references: [id], onDelete: Cascade)
+
+  @@index([advisorId])
+}
+
+model RebalanceJob {
+  id              String   @id @default(cuid())
+  advisorId       String
+  modelId         String?
+  executedAt      DateTime @default(now())
+  affectedClients Int
+  tradesExecuted  String
+
+  advisor Advisor @relation(fields: [advisorId], references: [id], onDelete: Cascade)
+
+  @@index([advisorId])
+}
+
+// -------- Shariah / Zakat / Audit --------
+
+model ShariahAlert {
+  id                  String   @id @default(cuid())
+  fundId              String
+  advisorId           String
+  detectedAt          DateTime @default(now())
+  reason              String
+  affectedClientCount Int      @default(0)
+  resolved            Boolean  @default(false)
+
+  advisor Advisor @relation(fields: [advisorId], references: [id], onDelete: Cascade)
+
+  @@index([advisorId, resolved])
+}
+
+model ZakatReport {
+  id                 String   @id @default(cuid())
+  clientId           String
+  hijriYear          Int
+  zakatableAssetsSar Float
+  nisabThresholdSar  Float
+  zakatDueSar        Float
+  generatedAt        DateTime @default(now())
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId, hijriYear])
+}
+
+// -------- Monte Carlo Performance Projections --------
+
+model ProjectionRun {
+  id                  String   @id @default(cuid())
+  advisorId           String
+  // What's being projected — denormalized for fast lookup + cache key
+  subjectType         String   // "client_portfolio" | "model_generic"
+  subjectId           String
+  // Scenario inputs
+  horizonMonths       Int
+  monthlyContribution Float    @default(0)
+  monthlyWithdrawal   Float    @default(0)
+  confidenceInterval  Int      @default(80) // 50 | 80 | 95
+  nRuns               Int      @default(10000)
+  seed                Int
+  // Snapshots taken at run-time
+  startingAumSar      Float
+  // JSON: { months: [0..n], p5:[...], p25:[...], p50:[...], p75:[...], p95:[...], assetsUsed: [{symbol, sourceSeries}] }
+  percentileResults   String
+  // JSON: { medianFinal, lowerCI, upperCI, expectedAnnualReturn, annualVol, probPositive, probBeatInflation, warnings }
+  aggregates          String
+  createdAt           DateTime @default(now())
+
+  @@index([advisorId, createdAt])
+  @@index([subjectType, subjectId, createdAt])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  advisorId  String
+  actionType String
+  entityType String
+  entityId   String
+  payload    String
+  createdAt  DateTime @default(now())
+
+  advisor Advisor @relation(fields: [advisorId], references: [id], onDelete: Cascade)
+
+  @@index([advisorId, createdAt])
+}
