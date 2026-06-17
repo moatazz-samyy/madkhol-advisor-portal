@@ -22,3 +22,11 @@ prisma/dev.db-journal
 
 # Logs
 npm-debug.log*
+
+# Local SQLite / test artifacts (also at root)
+dev.db
+dev.db-journal
+
+# Neon agent skill cache
+skills-lock.json
+.neon
