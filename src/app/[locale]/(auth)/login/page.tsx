@@ -73,33 +73,6 @@ export default async function LoginPage({
             <p className="text-muted mb-8">{t("subtitle")}</p>
 
             <LoginForm locale={locale} />
-
-            <div className="mt-10 card p-5 bg-lime-soft border-madkhol-100">
-              <p className="text-xs font-semibold text-madkhol-700 uppercase tracking-wider mb-3">
-                {t("demoCreds")}
-              </p>
-              <p className="text-sm text-muted mb-4">{t("demoNote")}</p>
-              <ul className="space-y-2.5 text-sm">
-                <li className="flex justify-between gap-4 items-center">
-                  <code className="font-mono text-deep">
-                    advisor1@madkhol.com
-                  </code>
-                  <span className="text-muted text-xs">سعد العتيبي</span>
-                </li>
-                <li className="flex justify-between gap-4 items-center">
-                  <code className="font-mono text-deep">
-                    advisor2@madkhol.com
-                  </code>
-                  <span className="text-muted text-xs">سارة الدوسري</span>
-                </li>
-                <li className="flex justify-between gap-4 items-center pt-1.5 border-t border-madkhol-200/60">
-                  <span className="text-xs text-muted">
-                    {locale === "ar" ? "كلمة المرور" : "Password"}
-                  </span>
-                  <code className="font-mono text-deep">demo123</code>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
 
